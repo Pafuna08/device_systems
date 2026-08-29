@@ -7,12 +7,14 @@
 ## 🎯 ¿QUÉ SE HA COMPLETADO?
 
 ### ✅ Fase 1: Configuración del Proyecto
+
 - Estructura de directorios creada correctamente
 - `requirements.txt` con todas las dependencias
 - `.gitignore` configurado para Python
 - `.env.example` con variables de entorno
 
 ### ✅ Fase 2: Modelo de Usuario Pydantic v2
+
 - `UserBase` con validaciones:
   - ✓ `name`: mínimo 3 caracteres, máximo 100
   - ✓ `email`: formato válido (EmailStr)
@@ -22,6 +24,7 @@
 - Validación de datos completamente implementada
 
 ### ✅ Fase 3: Endpoints GET
+
 - `GET /users` - Obtener todos los usuarios
 - `GET /users/{user_id}` - Obtener usuario por ID
 - `GET /users?role=admin` - Filtrar por rol
@@ -29,6 +32,7 @@
 - Todos funcionando y probados ✓
 
 ### ✅ Fase 4: Endpoint POST
+
 - `POST /users` - Crear nuevo usuario
 - Validación de datos de entrada
 - Prevención de correos duplicados
@@ -36,6 +40,7 @@
 - Probado y funcionando ✓
 
 ### ✅ Fase 5: Response Models y Cabeceras HTTP
+
 - Response models específicos por endpoint
 - Cabeceras HTTP personalizadas:
   - `X-App-Name: device_systems`
@@ -43,6 +48,7 @@
 - Middleware implementado correctamente
 
 ### ✅ Fase 6: Documentación y Pruebas
+
 - **README.md**: Documentación completa (330 líneas)
 - **QUICKSTART.md**: Guía de 5 minutos
 - **GITHUB_SETUP.md**: Instrucciones para GitHub
@@ -129,9 +135,10 @@ Total: **8 commits estructurados**
 ## 🚀 PRÓXIMOS PASOS
 
 ### 1️⃣ Subir a GitHub
+
 ```bash
-cd C:\Users\PABLO 08\Desktop\device_systems
-git remote add origin https://github.com/USERNAME/device_systems.git
+cd "C:\Users\PABLO 08\OneDrive\Escritorio\Python Avanzado\device_systems"
+git remote add origin https://github.com/Pafuna08/device_systems.git
 git branch -M main
 git push -u origin main
 ```
@@ -139,6 +146,7 @@ git push -u origin main
 Ver: [GITHUB_SETUP.md](GITHUB_SETUP.md)
 
 ### 2️⃣ Iniciar Servidor
+
 ```bash
 venv\Scripts\activate
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
@@ -147,6 +155,7 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 Ver: [QUICKSTART.md](QUICKSTART.md)
 
 ### 3️⃣ Acceder a Documentación
+
 - Página principal: http://127.0.0.1:8000
 - Swagger UI: http://127.0.0.1:8000/docs
 - ReDoc: http://127.0.0.1:8000/redoc
@@ -167,6 +176,7 @@ Ver: [QUICKSTART.md](QUICKSTART.md)
 ## 📦 ENTREGA FINAL
 
 El proyecto está **100% completo y listo para**:
+
 - ✅ Subir a GitHub
 - ✅ Presentar como evidencia de aprendizaje
 - ✅ Usar como base para futuras mejoras
