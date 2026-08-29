@@ -1,330 +1,299 @@
 # 🚀 device_systems API - Gestión de Usuarios
 
-**Aplicación backend desarrollada con FastAPI para la gestión de usuarios del sistema device_systems**
+API REST desarrollada con FastAPI para la gestión del recurso usuarios del sistema `device_systems`.
 
 ## 📋 Descripción
 
-Esta es una API REST completa que implementa todas las mejores prácticas de FastAPI para la gestión de usuarios. Incluye validación de datos con Pydantic v2, endpoints GET/POST, filtros avanzados y documentación interactiva.
+Este proyecto implementa una API REST para administrar usuarios, aplicando validaciones de datos, filtros por parámetros de consulta, endpoints GET y POST, manejo de errores y documentación automática con Swagger UI.
 
-## ✨ Características Implementadas
+El desarrollo se realizó siguiendo la guía de la actividad, utilizando una estructura modular y comprobando la funcionalidad con evidencia real durante la ejecución local de la API.
 
-✅ **Configuración del proyecto**: Estructura completa y profesional  
-✅ **Modelo de usuario Pydantic v2**: Con todas las validaciones requeridas  
-✅ **Endpoints GET**:
-   - `GET /users` - Obtener todos los usuarios
-   - `GET /users/{user_id}` - Obtener usuario por ID
-   - `GET /users?role=admin` - Filtrar por rol
-   - `GET /users?is_active=true` - Filtrar por estado
+## ✅ Requisitos cumplidos
 
-✅ **Endpoint POST**:
-   - `POST /users` - Crear nuevo usuario con validaciones
+- Configuración correcta del proyecto
+- Modelo de usuario con Pydantic v2
+- GET /users
+- GET /users/{user_id}
+- GET /users?role=admin
+- GET /users?is_active=true
+- POST /users
+- Validación de campos con Pydantic
+- Detección de correos duplicados
+- Modelos de respuesta (Response Models)
+- Cabeceras HTTP personalizadas
+- Documentación automática con Swagger UI y ReDoc
 
-✅ **Response Models**: Modelos específicos para cada respuesta  
-✅ **Cabeceras HTTP personalizadas**: X-App-Name y X-API-Version  
-✅ **Documentación automática**: Swagger UI y ReDoc  
-✅ **Validaciones completas**: Email único, formatos válidos, roles permitidos
+## 🧱 Estructura del proyecto
+
+```text
+device_systems/
+├── .env.example
+├── .gitignore
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   └── user_routes.py
+│   └── schemas/
+│       ├── __init__.py
+│       └── user_schema.py
+├── device_systems_postman.json
+├── device_systems_thunder.json
+├── evidencias/
+│   ├── 1.png
+│   ├── 2.png
+│   ├── 3.png
+│   ├── 4.0.png
+│   ├── 4.1.png
+│   ├── 5.0.png
+│   └── 5.1.png
+├── GITHUB_SETUP.md
+├── INICIO_RAPIDO.md
+├── QUICKSTART.md
+├── README.md
+├── requirements.txt
+├── RESUMEN_PROYECTO.md
+├── venv/
+└── .git/
+```
 
 ## 🛠️ Instalación
 
-### Requisitos Previos
-- Python 3.8 o superior
-- pip (gestor de paquetes de Python)
-- Git
+### 1. Clonar el proyecto
 
-### Paso 1: Clonar el Repositorio
 ```bash
 git clone <URL-del-repositorio>
 cd device_systems
 ```
 
-### Paso 2: Crear Entorno Virtual
+### 2. Crear entorno virtual
+
 ```bash
-# Windows
 python -m venv venv
 venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
 ```
 
-### Paso 3: Instalar Dependencias
+### 3. Instalar dependencias
+
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 Ejecución del Servidor
+## ▶️ Ejecutar la API
+
+Desde la raíz del proyecto:
 
 ```bash
-# Opción 1: Desde la raíz del proyecto
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-
-# Opción 2: Directamente
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-La API estará disponible en: **http://127.0.0.1:8000**
+La API estará disponible en:
 
-## 📚 Documentación Interactiva
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
 
-- **Swagger UI**: http://127.0.0.1:8000/docs
-- **ReDoc**: http://127.0.0.1:8000/redoc
-- **Página Principal**: http://127.0.0.1:8000
+## 📡 Endpoints implementados
 
-## 📡 Endpoints Disponibles
+| Método | Endpoint              | Descripción                |
+| ------ | --------------------- | -------------------------- |
+| GET    | /users                | Lista todos los usuarios   |
+| GET    | /users/{user_id}      | Consulta un usuario por ID |
+| POST   | /users                | Crea un usuario nuevo      |
+| GET    | /users?role=admin     | Filtra por rol             |
+| GET    | /users?is_active=true | Filtra por estado          |
 
-### 1. Obtener Todos los Usuarios
-```http
-GET /users
-```
+## 🔒 Validaciones del modelo
 
-**Parámetros Query** (opcionales):
-- `role`: Filtrar por rol (admin, support, user)
-- `is_active`: Filtrar por estado (true, false)
+El esquema de usuario valida lo siguiente:
 
-**Ejemplo:**
+- `name`: obligatorio, mínimo 3 caracteres
+- `email`: formato válido y único
+- `role`: solo puede ser `admin`, `support` o `user`
+- `is_active`: booleano
+
+## 🧪 Evidencias reales de funcionamiento
+
+A continuación se presentan ejemplos ejecutados en la API en funcionamiento, con respuestas reales obtenidas durante la validación del proyecto.
+
+### 1. GET /users
+
+Ejecutado en la API real:
+
 ```bash
 curl http://127.0.0.1:8000/users
-curl http://127.0.0.1:8000/users?role=admin
-curl http://127.0.0.1:8000/users?is_active=true
 ```
 
-**Respuesta (200 OK):**
+Respuesta real observada:
+
 ```json
 {
   "users": [
     {
-      "id": 1,
       "name": "Admin Usuario",
       "email": "admin@device-systems.com",
       "role": "admin",
-      "is_active": true
+      "is_active": true,
+      "id": 1
+    },
+    {
+      "name": "Support Usuario",
+      "email": "support@device-systems.com",
+      "role": "support",
+      "is_active": true,
+      "id": 2
+    },
+    {
+      "name": "Usuario Normal",
+      "email": "user@device-systems.com",
+      "role": "user",
+      "is_active": false,
+      "id": 3
     }
   ],
-  "total": 1
+  "total": 3
 }
 ```
 
----
+### 2. GET /users/1
 
-### 2. Obtener Usuario por ID
-```http
-GET /users/{user_id}
-```
+Ejecutado en la API real:
 
-**Path Parameters:**
-- `user_id`: ID único del usuario (obligatorio)
-
-**Ejemplo:**
 ```bash
 curl http://127.0.0.1:8000/users/1
 ```
 
-**Respuesta (200 OK):**
+Respuesta real observada:
+
 ```json
 {
-  "id": 1,
   "name": "Admin Usuario",
   "email": "admin@device-systems.com",
+  "role": "admin",
+  "is_active": true,
+  "id": 1
+}
+```
+
+### 3. POST /users - creación exitosa
+
+Ejecutado con:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/users" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ana Gómez","email":"ana.gomez@device-systems.com","role":"user","is_active":true}'
+```
+
+Respuesta real observada:
+
+```json
+{
+  "name": "Ana Gómez",
+  "email": "ana.gomez@device-systems.com",
+  "role": "user",
+  "is_active": true,
+  "id": 4
+}
+```
+
+### 4. POST /users - validación con error
+
+Ejecutado con este cuerpo inválido:
+
+```json
+{
+  "name": "A",
+  "email": "correo_invalido",
   "role": "admin",
   "is_active": true
 }
 ```
 
-**Respuesta (404 Not Found):**
+Comando ejecutado:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/users" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"A","email":"correo_invalido","role":"admin","is_active":true}'
+```
+
+Respuesta real observada:
+
 ```json
 {
-  "detail": "Usuario con ID 999 no encontrado"
+  "detail": [
+    {
+      "type": "string_too_short",
+      "loc": ["body", "name"],
+      "msg": "String should have at least 3 characters",
+      "input": "A",
+      "ctx": {
+        "min_length": 3
+      }
+    },
+    {
+      "type": "value_error",
+      "loc": ["body", "email"],
+      "msg": "value is not a valid email address: An email address must have an @-sign.",
+      "input": "correo_invalido",
+      "ctx": {
+        "reason": "An email address must have an @-sign."
+      }
+    }
+  ]
 }
 ```
 
----
+### 5. Evidencia de Swagger UI
 
-### 3. Crear Nuevo Usuario
+La documentación interactiva de la API se revisó en:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Las capturas generadas y almacenadas en la carpeta `evidencias` son las siguientes:
+
+#### Captura 1 - Swagger UI
+
+![Swagger UI](evidencias/1.png)
+
+#### Captura 2 - Evidencia de pruebas GET /users
+
+![Prueba GET /users](evidencias/2.png)
+
+#### Captura 3 - Evidencia de pruebas GET /users/{user_id}
+
+![Prueba GET /users/{user_id}](evidencias/3.png)
+
+#### Captura 4 - Evidencia de pruebas POST /users
+
+![Prueba POST /users exitosa](evidencias/4.0.png)
+
+#### Captura 5 - Evidencia de validaciones y errores
+
+![Validación y errores en POST /users](evidencias/4.1.png)
+
+Estas evidencias corresponden a la ejecución de los endpoints principales del proyecto y a la validación de errores de entrada en el recurso `users`.
+
+## 🧾 Cabeceras HTTP personalizadas
+
+La API incluye las siguientes cabeceras en sus respuestas:
+
 ```http
-POST /users
-Content-Type: application/json
+X-App-Name: device_systems
+X-API-Version: 1.0
 ```
 
-**Body** (JSON):
-```json
-{
-  "name": "Nuevo Usuario",
-  "email": "nuevo@device-systems.com",
-  "role": "user",
-  "is_active": true
-}
-```
+## 📌 Reflexión personal
 
-**Validaciones:**
-- ✓ `name`: Mínimo 3 caracteres, máximo 100
-- ✓ `email`: Formato válido y único (sin duplicados)
-- ✓ `role`: Valores permitidos: admin, support, user
-- ✓ `is_active`: Booleano (true/false)
+Este proyecto permitió fortalecer el conocimiento sobre la construcción de APIs REST con FastAPI, la validación de datos con Pydantic, el uso de parámetros path y query, y la generación automática de documentación mediante Swagger UI. Además, brindó una comprensión clara del manejo de respuestas estructuradas y de validaciones de entrada para evitar errores del cliente.
 
-**Ejemplo:**
-```bash
-curl -X POST http://127.0.0.1:8000/users \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Juan Pérez",
-    "email": "juan.perez@device-systems.com",
-    "role": "support",
-    "is_active": true
-  }'
-```
+## 🧠 Conclusión
 
-**Respuesta (201 Created):**
-```json
-{
-  "id": 4,
-  "name": "Juan Pérez",
-  "email": "juan.perez@device-systems.com",
-  "role": "support",
-  "is_active": true
-}
-```
-
-**Respuesta (400 Bad Request) - Email duplicado:**
-```json
-{
-  "detail": "El correo 'juan@device-systems.com' ya está registrado en el sistema"
-}
-```
-
----
-
-## 📊 Ejemplos de Uso
-
-### Ejemplo 1: Obtener todos los usuarios activos
-```bash
-curl http://127.0.0.1:8000/users?is_active=true
-```
-
-### Ejemplo 2: Obtener todos los administradores
-```bash
-curl http://127.0.0.1:8000/users?role=admin
-```
-
-### Ejemplo 3: Obtener usuario específico
-```bash
-curl http://127.0.0.1:8000/users/2
-```
-
-### Ejemplo 4: Crear usuario con validación de email
-```bash
-# ✓ Éxito
-curl -X POST http://127.0.0.1:8000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"test@device-systems.com","role":"user","is_active":true}'
-
-# ✗ Error - Email inválido
-curl -X POST http://127.0.0.1:8000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"invalid-email","role":"user"}'
-
-# ✗ Error - Nombre muy corto
-curl -X POST http://127.0.0.1:8000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"AB","email":"test@device-systems.com","role":"user"}'
-```
-
-## 🧪 Pruebas con Herramientas
-
-### Usando Swagger UI
-1. Abre http://127.0.0.1:8000/docs en tu navegador
-2. Haz clic en el endpoint que deseas probar
-3. Completa los parámetros y haz clic en "Execute"
-
-### Usando Postman
-1. Descarga Postman desde https://www.postman.com
-2. Importa la colección `device_systems_postman.json`
-3. Ejecuta las pruebas desde la interfaz
-
-### Usando Thunder Client
-1. Instala la extensión Thunder Client en VS Code
-2. Abre el archivo `device_systems_thunder.json`
-3. Realiza las pruebas directamente
-
-## 📁 Estructura del Proyecto
-
-```
-device_systems/
-│
-├── app/
-│   ├── __init__.py              # Paquete principal
-│   ├── main.py                  # Aplicación FastAPI
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   └── user_schema.py       # Modelos Pydantic v2
-│   └── routes/
-│       ├── __init__.py
-│       └── user_routes.py       # Endpoints GET y POST
-│
-├── device_systems_postman.json  # Colección Postman
-├── device_systems_thunder.json  # Colección Thunder Client
-├── requirements.txt              # Dependencias Python
-├── .gitignore                   # Archivos ignorados por Git
-├── README.md                    # Este archivo
-└── .env.example                 # Ejemplo de variables de entorno
-```
-
-## 🔒 Validaciones Implementadas
-
-### Modelo de Usuario
-
-| Campo | Tipo | Validación | Ejemplo |
-|-------|------|-----------|---------|
-| `id` | int | Auto-generado | 1 |
-| `name` | str | Mín 3 chars, máx 100 | "Juan Pérez" |
-| `email` | EmailStr | Formato válido, único | "juan@device-systems.com" |
-| `role` | str | admin, support, user | "admin" |
-| `is_active` | bool | true/false | true |
-
-## 🎯 Conceptos FastAPI Utilizados
-
-✅ **FastAPI Basics**: Creación de aplicación y routing  
-✅ **HTTP Methods**: GET y POST implementados  
-✅ **Path Parameters**: `GET /users/{user_id}`  
-✅ **Query Parameters**: Filtros por rol e is_active  
-✅ **Pydantic v2**: Validación de datos con EmailStr y Literal  
-✅ **Response Models**: Modelos específicos por endpoint  
-✅ **HTTP Headers**: Cabeceras personalizadas (middleware)  
-✅ **Status Codes**: 200, 201, 400, 404  
-✅ **Exception Handling**: HTTPException y manejadores globales  
-✅ **Auto Documentation**: Swagger UI y ReDoc
-
-## 🚀 Próximos Pasos (Mejoras Futuras)
-
-- [ ] Agregar autenticación JWT
-- [ ] Implementar base de datos (PostgreSQL)
-- [ ] CRUD completo (PUT, DELETE)
-- [ ] Tests unitarios con pytest
-- [ ] Despliegue en Docker
-- [ ] CI/CD con GitHub Actions
-- [ ] Logging estructurado
-
-## 📝 Reflexión sobre FastAPI
-
-FastAPI es un framework moderno y poderoso para construir APIs REST en Python. Durante el desarrollo de `device_systems` aprendimos:
-
-1. **Productividad**: FastAPI permite desarrollar rápidamente con código limpio
-2. **Validación**: Pydantic proporciona validación automática y mensajes de error claros
-3. **Documentación**: Swagger UI se genera automáticamente desde el código
-4. **Performance**: Comparado con Flask, FastAPI es significativamente más rápido
-5. **Type Hints**: El uso de type hints mejora la legibilidad y permite mejor autocompletado
-6. **Developer Experience**: La documentación interactiva mejora enormemente la experiencia
-
-## 📞 Soporte
-
-Para reportar problemas o sugerencias, abre un issue en el repositorio de GitHub.
+El proyecto cumple con la funcionalidad principal solicitada por la guía: gestión del recurso usuarios, validación de datos con Pydantic, endpoints GET y POST, filtros por query, manejo de errores y documentación automática. La evidencia de funcionamiento quedó documentada en este README y en la carpeta de capturas del proyecto.
 
 ## 📜 Licencia
 
-Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
-
----
-
-**Desarrollado por**: [Tu Nombre]  
-**Fecha**: 2024  
-**Versión**: 1.0.0
+Este proyecto se entrega con fines de aprendizaje y desarrollo académico.
