@@ -62,24 +62,36 @@
 
 ```
 device_systems/
-├── app/
-│   ├── main.py                 # Aplicación FastAPI principal
-│   ├── __init__.py
-│   ├── schemas/
-│   │   ├── user_schema.py      # Modelos Pydantic v2
-│   │   └── __init__.py
-│   └── routes/
-│       ├── user_routes.py      # Endpoints GET y POST
-│       └── __init__.py
-├── venv/                       # Entorno virtual (creado)
 ├── .env.example                # Variables de entorno
+├── .git/                       # Historial de Git
 ├── .gitignore                  # Ignorar archivos
-├── requirements.txt            # Dependencias
-├── README.md                   # Documentación completa
-├── QUICKSTART.md               # Guía rápida
-├── GITHUB_SETUP.md             # Instrucciones GitHub
+├── app/
+│   ├── __init__.py
+│   ├── main.py                 # Aplicación FastAPI principal
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   └── user_routes.py      # Endpoints GET y POST
+│   └── schemas/
+│       ├── __init__.py
+│       └── user_schema.py      # Modelos Pydantic v2
 ├── device_systems_postman.json # Colección Postman
-└── device_systems_thunder.json # Colección Thunder Client
+├── device_systems_thunder.json # Colección Thunder Client
+├── evidencias/
+│   ├── 1.png
+│   ├── 2.png
+│   ├── 3.png
+│   ├── 4.0.png
+│   ├── 4.1.png
+│   ├── 5.0.png
+│   └── 5.1.png
+├── GITHUB_SETUP.md             # Guía de GitHub
+├── INICIO_RAPIDO.md            # Inicio rápido del proyecto
+├── QUICKSTART.md               # Guía rápida
+├── README.md                   # Documentación completa
+├── requirements.txt            # Dependencias
+├── RESUMEN_PROYECTO.md         # Resumen ejecutivo
+├── venv/                       # Entorno virtual
+└── .gitignore
 ```
 
 ---

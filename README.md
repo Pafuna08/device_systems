@@ -28,6 +28,7 @@ El desarrollo se realizó siguiendo la guía de la actividad, utilizando una est
 ```text
 device_systems/
 ├── .env.example
+├── .git/
 ├── .gitignore
 ├── app/
 │   ├── __init__.py
@@ -55,7 +56,7 @@ device_systems/
 ├── requirements.txt
 ├── RESUMEN_PROYECTO.md
 ├── venv/
-└── .git/
+└── .gitignore
 ```
 
 ## 🛠️ Instalación
@@ -63,7 +64,7 @@ device_systems/
 ### 1. Clonar el proyecto
 
 ```bash
-git clone <URL-del-repositorio>
+git clone https://github.com/Pafuna08/device_systems.git
 cd device_systems
 ```
 
@@ -253,7 +254,7 @@ La documentación interactiva de la API se revisó en:
 http://127.0.0.1:8000/docs
 ```
 
-Las capturas generadas y almacenadas en la carpeta `evidencias` son las siguientes:
+Las capturas generadas y almacenadas en la carpeta `evidencias` son 7 archivos en total, y corresponden a los siguientes momentos de validación:
 
 #### Captura 1 - Swagger UI
 
@@ -267,15 +268,23 @@ Las capturas generadas y almacenadas en la carpeta `evidencias` son las siguient
 
 ![Prueba GET /users/{user_id}](evidencias/3.png)
 
-#### Captura 4 - Evidencia de pruebas POST /users
+#### Captura 4A - Evidencia de pruebas POST /users (creación exitosa)
 
 ![Prueba POST /users exitosa](evidencias/4.0.png)
 
-#### Captura 5 - Evidencia de validaciones y errores
+#### Captura 4B - Evidencia de pruebas POST /users (respuesta del servidor)
 
-![Validación y errores en POST /users](evidencias/4.1.png)
+![Respuesta del POST /users](evidencias/4.1.png)
 
-Estas evidencias corresponden a la ejecución de los endpoints principales del proyecto y a la validación de errores de entrada en el recurso `users`.
+#### Captura 5A - Evidencia de validaciones y errores en POST /users
+
+![Validación y errores en POST /users](evidencias/5.0.png)
+
+#### Captura 5B - Evidencia adicional de validación y respuesta de error
+
+![Validación adicional de errores en POST /users](evidencias/5.1.png)
+
+Estas evidencias corresponden a la ejecución de los endpoints principales del proyecto, a la validación de errores de entrada y a la respuesta del sistema en el recurso `users`.
 
 ## 🧾 Cabeceras HTTP personalizadas
 
