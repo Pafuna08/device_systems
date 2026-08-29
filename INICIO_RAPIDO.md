@@ -126,7 +126,7 @@ git branch -M main
 git push -u origin main
 ```
 
-**Reemplaza `TU_USUARIO` con tu usuario de GitHub**
+Tu repositorio real es: https://github.com/Pafuna08/device_systems.git
 
 Para detalles completos: [GITHUB_SETUP.md](GITHUB_SETUP.md)
 
