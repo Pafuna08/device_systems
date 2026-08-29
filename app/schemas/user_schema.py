@@ -1,0 +1,60 @@
+"""
+Esquemas de validación de usuarios con Pydantic v2
+"""
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional, Literal
+
+
+class UserBase(BaseModel):
+    """Modelo base con campos comunes"""
+    name: str = Field(
+        ..., 
+        min_length=3, 
+        max_length=100,
+        description="Nombre del usuario (mínimo 3 caracteres)"
+    )
+    email: EmailStr = Field(
+        ..., 
+        description="Correo electrónico válido del usuario"
+    )
+    role: Literal["admin", "support", "user"] = Field(
+        default="user",
+        description="Rol del usuario: admin, support o user"
+    )
+    is_active: bool = Field(
+        default=True,
+        description="Estado del usuario (activo/inactivo)"
+    )
+
+
+class UserCreate(UserBase):
+    """Modelo para crear un nuevo usuario"""
+    pass
+
+
+class UserResponse(UserBase):
+    """Modelo de respuesta con ID incluido"""
+    id: int = Field(..., description="ID único del usuario")
+
+    class Config:
+        from_attributes = True
+
+
+class UserResponseWithoutEmail(BaseModel):
+    """Modelo de respuesta que oculta el email"""
+    id: int
+    name: str
+    role: str
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+class UserListResponse(BaseModel):
+    """Modelo para listar múltiples usuarios"""
+    users: list[UserResponse]
+    total: int = Field(..., description="Total de usuarios")
+
+    class Config:
+        from_attributes = True
