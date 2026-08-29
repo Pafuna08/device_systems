@@ -39,7 +39,7 @@ git push -u origin main
 2. Verifica que ves:
    - ✅ Estructura de carpetas (`app/`, `app/schemas/`, `app/routes/`)
    - ✅ Archivos principales (`main.py`, `requirements.txt`, `README.md`)
-   - ✅ Historial de commits (6 commits estructurados)
+   - ✅ Historial de commits actualizado con la entrega final del proyecto
 
 ## 4️⃣ Flujo de Git Completo (Para Futuros Cambios)
 
@@ -82,12 +82,18 @@ Si pides contraseña, usa un **Personal Access Token**:
 ## 📚 Historial de Commits Actual
 
 ```
+2a1f7ce - docs: alinear estructura y evidencias con proyecto real
+ecd1dab - docs: actualizar rutas y repo real de GitHub
+c365927 - Entrega final device_systems
+d56cb21 - docs: Agregar guía de inicio rápido y checklist de completación
+389536f - docs: Resumen ejecutivo del proyecto completado
+d5be3cf - docs: Agregar guías de inicio rápido y subida a GitHub
+753e4af - chore: Actualizar dependencias a versiones compatibles con Python 3.14
 7aa2aeb - test: Agregar colecciones de Postman y Thunder Client
 1a93b6e - docs: Documentación completa de la API device_systems
 1f05af6 - feat: Crear aplicación FastAPI con cabeceras HTTP personalizadas
 842ff67 - feat: Implementar endpoints GET y POST para usuarios
 0f777c1 - feat: Implementar modelos de usuario con Pydantic v2
-bcb74ec - feat: Configuración inicial del proyecto device_systems
 ```
 
 ## ✨ Próximos Pasos Después de Subir
