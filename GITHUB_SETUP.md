@@ -17,14 +17,14 @@ Sigue estos pasos para subir tu proyecto device_systems a GitHub.
 En la terminal de tu proyecto:
 
 ```bash
-# Navega al proyecto
-cd C:\Users\PABLO 08\Desktop\device_systems
+# Navega al proyecto actual
+cd "C:\Users\PABLO 08\OneDrive\Escritorio\Python Avanzado\device_systems"
 
 # Verificar estado de Git
 git status
 
-# Agregar origin remoto (reemplaza USERNAME con tu usuario de GitHub)
-git remote add origin https://github.com/USERNAME/device_systems.git
+# Agregar origin remoto con tu repositorio real
+git remote add origin https://github.com/Pafuna08/device_systems.git
 
 # Configurar rama principal
 git branch -M main
@@ -35,7 +35,7 @@ git push -u origin main
 
 ## 3️⃣ Verificar en GitHub
 
-1. Abre https://github.com/USERNAME/device_systems
+1. Abre https://github.com/Pafuna08/device_systems
 2. Verifica que ves:
    - ✅ Estructura de carpetas (`app/`, `app/schemas/`, `app/routes/`)
    - ✅ Archivos principales (`main.py`, `requirements.txt`, `README.md`)
