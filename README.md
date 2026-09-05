@@ -85,10 +85,10 @@ Asi se centraliza la busqueda y el error 404 sin repetirlo en cada endpoint.
 
 ## Pruebas y evidencias
 
-Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json` en Thunder Client. Revisar Swagger en `/docs` y ReDoc en `/redoc`. La carpeta `evidencias/` contiene capturas de la guia anterior y debe incorporar las nuevas capturas con estos nombres:
+Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json` en Thunder Client. Revisar Swagger en `/docs` y ReDoc en `/redoc`. La carpeta `evidencias/` contiene las capturas de la guia anterior y las nuevas capturas ya incorporadas:
 
-- `6_swagger_crud.png`: Swagger con PUT, PATCH y DELETE.
-- `7_redoc_crud.png`: ReDoc con los endpoints documentados.
+- [`6_swagger_crud.png`](evidencias/6_swagger_crud.png): Swagger con la API version 2.0.0.
+- [`7_redoc_crud.png`](evidencias/7_redoc_crud.png): ReDoc con la documentacion de la API.
 - `8_put_exitoso.png`: PUT con respuesta 200.
 - `9_patch_exitoso.png`: PATCH con respuesta 200.
 - `10_delete_exitoso.png`: DELETE con respuesta 204.
@@ -98,10 +98,12 @@ Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json
 
 ```text
 main
-└── feature/crud-users
+├── feature/crud-users
     ├── feat: separar datos, servicios y dependencias
     ├── feat: implementar CRUD completo de usuarios
     └── docs: actualizar guia intermedia y pruebas
+└── feature/evidencias-guia8
+    └── test: completar escenarios y evidencias de la guia 8
 ```
 
 Flujo recomendado:
