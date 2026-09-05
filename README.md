@@ -94,8 +94,16 @@ Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json
 
 - [`6_swagger_crud.png`](evidencias/6_swagger_crud.png): Swagger con la API version 2.0.0.
 - [`7_redoc_crud.png`](evidencias/7_redoc_crud.png): ReDoc con la documentacion de la API.
-- [`8_put_patch_resultado.png`](evidencias/8_put_patch_resultado.png): resultado real de PUT y PATCH.
-- [`10_delete_error_404.png`](evidencias/10_delete_error_404.png): respuesta real 404 despues de eliminar un usuario.
+- [`7.1_redoc_crud.png`](evidencias/7.1_redoc_crud.png): evidencia adicional de ReDoc.
+- [`8_post_exitoso.png`](evidencias/8_post_exitoso.png): POST con respuesta 201.
+- [`9_put_exitoso.png`](evidencias/9_put_exitoso.png): PUT con respuesta 200.
+- [`10_patch_exitoso.png`](evidencias/10_patch_exitoso.png): PATCH con respuesta 200.
+- [`11_delete_exitoso.png`](evidencias/11_delete_exitoso.png): DELETE con respuesta 204.
+- [`12_error_correo_duplicado.png`](evidencias/12_error_correo_duplicado.png): error 400 por correo duplicado.
+- [`13_error_datos_invalidos.png`](evidencias/13_error_datos_invalidos.png): error 422 por datos invalidos.
+- [`14_error_patch_vacio.png`](evidencias/14_error_patch_vacio.png): error 400 por PATCH sin datos.
+- [`15_error_put_inexistente.png`](evidencias/15_error_put_inexistente.png): error 404 en PUT.
+- [`16_error_delete_inexistente.png`](evidencias/16_error_delete_inexistente.png): error 404 en DELETE.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md): registro reproducible de estados HTTP y respuestas.
 
 Las pruebas funcionales completas incluyen creacion, actualizacion completa y parcial, eliminacion, filtros y los errores de correo duplicado, datos invalidos, recursos inexistentes y PATCH vacio. Los resultados detallados estan en `RESULTADOS_GUIA8.md` y las colecciones contienen las peticiones reproducibles.
