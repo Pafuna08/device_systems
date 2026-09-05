@@ -15,7 +15,18 @@ git commit -m "docs: actualizar documentacion de la guia intermedia"
 git push -u origin feature/crud-users
 ```
 
-En GitHub se crea un Pull Request de `feature/crud-users` hacia `main`. Tras revisar las pruebas, se hace merge y se sincroniza:
+Para completar las evidencias se uso tambien la rama `feature/evidencias-guia8`:
+
+```bash
+git switch main
+git pull origin main
+git switch -c feature/evidencias-guia8
+git add evidencias README.md
+git commit -m "docs: incorporar capturas funcionales de la guia 8"
+git push -u origin feature/evidencias-guia8
+```
+
+En GitHub se crea un Pull Request de cada rama hacia `main`. En este proyecto, los Pull Requests de implementacion y evidencias fueron fusionados. Tras revisar las pruebas, se sincroniza:
 
 ```bash
 git switch main

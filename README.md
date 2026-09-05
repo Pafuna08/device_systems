@@ -37,14 +37,14 @@ app/
 
 ## Endpoints
 
-| Metodo | Ruta | Exito | Funcion |
-|---|---|---:|---|
-| GET | `/users` | 200 | Lista y filtra por `role` o `is_active` |
-| GET | `/users/{user_id}` | 200 | Consulta por ID |
-| POST | `/users` | 201 | Crea un usuario |
-| PUT | `/users/{user_id}` | 200 | Reemplaza todos los campos |
-| PATCH | `/users/{user_id}` | 200 | Actualiza solo campos enviados |
-| DELETE | `/users/{user_id}` | 204 | Elimina sin cuerpo de respuesta |
+| Metodo | Ruta               | Exito | Funcion                                 |
+| ------ | ------------------ | ----: | --------------------------------------- |
+| GET    | `/users`           |   200 | Lista y filtra por `role` o `is_active` |
+| GET    | `/users/{user_id}` |   200 | Consulta por ID                         |
+| POST   | `/users`           |   201 | Crea un usuario                         |
+| PUT    | `/users/{user_id}` |   200 | Reemplaza todos los campos              |
+| PATCH  | `/users/{user_id}` |   200 | Actualiza solo campos enviados          |
+| DELETE | `/users/{user_id}` |   204 | Elimina sin cuerpo de respuesta         |
 
 Roles validos: `admin`, `support`, `user`. El correo debe ser valido y unico.
 
@@ -53,13 +53,18 @@ Roles validos: `admin`, `support`, `user`. El correo debe ser valido y unico.
 Crear:
 
 ```json
-{"name": "Carlos Mendoza", "email": "carlos.mendoza@device-systems.com", "role": "support", "is_active": true}
+{
+  "name": "Carlos Mendoza",
+  "email": "carlos.mendoza@device-systems.com",
+  "role": "support",
+  "is_active": true
+}
 ```
 
 Actualizar parcialmente:
 
 ```json
-{"role": "admin"}
+{ "role": "admin" }
 ```
 
 ```bash
@@ -92,6 +97,12 @@ Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json
 - [`8_put_patch_resultado.png`](evidencias/8_put_patch_resultado.png): resultado real de PUT y PATCH.
 - [`10_delete_error_404.png`](evidencias/10_delete_error_404.png): respuesta real 404 despues de eliminar un usuario.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md): registro reproducible de estados HTTP y respuestas.
+
+Las pruebas funcionales completas incluyen creacion, actualizacion completa y parcial, eliminacion, filtros y los errores de correo duplicado, datos invalidos, recursos inexistentes y PATCH vacio. Los resultados detallados estan en `RESULTADOS_GUIA8.md` y las colecciones contienen las peticiones reproducibles.
+
+## Reflexion final
+
+La evolucion de `device_systems` permitio pasar de una API basica a una solucion REST organizada. Separar rutas, esquemas, servicios, datos y dependencias facilita el mantenimiento y evita repetir validaciones. PUT y PATCH muestran la diferencia entre reemplazar un recurso y modificar solo algunos campos, mientras que `HTTPException` y los codigos de estado hacen que los errores sean claros para el cliente. Swagger, ReDoc y Git Flow dejaron el proyecto documentado, verificable y preparado para futuras mejoras como autenticacion y persistencia real.
 
 ## Git Flow aplicado
 
