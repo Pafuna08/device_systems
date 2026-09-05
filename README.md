@@ -76,11 +76,11 @@ Respuestas esperadas:
 
 ```json
 {
-    "id": 1,
-    "name": "Admin Actualizado",
-    "email": "admin.actualizado@device-systems.com",
-    "role": "support",
-    "is_active": true
+  "id": 1,
+  "name": "Admin Actualizado",
+  "email": "admin.actualizado@device-systems.com",
+  "role": "support",
+  "is_active": true
 }
 ```
 
