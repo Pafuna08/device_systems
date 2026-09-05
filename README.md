@@ -89,11 +89,9 @@ Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json
 
 - [`6_swagger_crud.png`](evidencias/6_swagger_crud.png): Swagger con la API version 2.0.0.
 - [`7_redoc_crud.png`](evidencias/7_redoc_crud.png): ReDoc con la documentacion de la API.
+- [`8_put_patch_resultado.png`](evidencias/8_put_patch_resultado.png): resultado real de PUT y PATCH.
+- [`10_delete_error_404.png`](evidencias/10_delete_error_404.png): respuesta real 404 despues de eliminar un usuario.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md): registro reproducible de estados HTTP y respuestas.
-- `8_put_exitoso.png`: PUT con respuesta 200.
-- `9_patch_exitoso.png`: PATCH con respuesta 200.
-- `10_delete_exitoso.png`: DELETE con respuesta 204.
-- `11_errores_crud.png`: errores 400, 404 y 422.
 
 ## Git Flow aplicado
 
