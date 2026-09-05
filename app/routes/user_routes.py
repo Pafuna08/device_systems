@@ -1,159 +1,127 @@
-"""
-Rutas de usuarios - Endpoints GET y POST
-"""
-from fastapi import APIRouter, Query, Path, HTTPException, status
-from typing import Optional, Literal
+"""Endpoints CRUD del recurso users."""
+
+from typing import Literal, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+
+from app.dependencies.user_dependencies import get_user_or_404
 from app.schemas.user_schema import (
-    UserCreate, 
-    UserResponse, 
-    UserListResponse
+    UserCreate,
+    UserListResponse,
+    UserPatch,
+    UserReplace,
+    UserResponse,
+)
+from app.services.user_service import (
+    create_user,
+    delete_user,
+    email_exists,
+    list_users,
+    replace_user,
+    update_user,
 )
 
-# Inicializar router
-router = APIRouter(prefix="/users", tags=["users"])
-
-# Base de datos simulada (en memoria)
-fake_users_db = {
-    1: {
-        "id": 1,
-        "name": "Admin Usuario",
-        "email": "admin@device-systems.com",
-        "role": "admin",
-        "is_active": True
-    },
-    2: {
-        "id": 2,
-        "name": "Support Usuario",
-        "email": "support@device-systems.com",
-        "role": "support",
-        "is_active": True
-    },
-    3: {
-        "id": 3,
-        "name": "Usuario Normal",
-        "email": "user@device-systems.com",
-        "role": "user",
-        "is_active": False
-    }
-}
-
-# Contador para generar IDs
-next_user_id = 4
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get(
     "",
     response_model=UserListResponse,
-    summary="Obtener todos los usuarios",
-    description="Retorna la lista de todos los usuarios registrados en el sistema"
+    summary="Listar usuarios",
+    description="Retorna usuarios y permite filtrar por rol o estado.",
+    response_description="Lista de usuarios encontrados",
 )
 async def get_all_users(
     role: Optional[Literal["admin", "support", "user"]] = Query(
-        None,
-        description="Filtrar por rol del usuario"
+        None, description="Filtrar por rol"
     ),
-    is_active: Optional[bool] = Query(
-        None,
-        description="Filtrar por estado (activo/inactivo)"
-    )
+    is_active: Optional[bool] = Query(None, description="Filtrar por estado"),
 ):
-    """
-    Obtiene todos los usuarios con filtros opcionales.
-    
-    Parámetros de query:
-    - **role**: Filtrar por rol (admin, support, user)
-    - **is_active**: Filtrar por estado activo (true/false)
-    """
-    users = list(fake_users_db.values())
-    
-    # Aplicar filtro de rol si se proporciona
-    if role:
-        users = [u for u in users if u["role"] == role]
-    
-    # Aplicar filtro de estado activo si se proporciona
-    if is_active is not None:
-        users = [u for u in users if u["is_active"] == is_active]
-    
+    users = list_users(role=role, is_active=is_active)
     return UserListResponse(users=users, total=len(users))
 
 
 @router.get(
     "/{user_id}",
     response_model=UserResponse,
-    summary="Obtener usuario por ID",
-    description="Retorna los detalles de un usuario específico por su ID",
-    responses={
-        404: {"description": "Usuario no encontrado"}
-    }
+    summary="Consultar usuario",
+    description="Retorna un usuario por su identificador.",
+    response_description="Usuario encontrado",
 )
-async def get_user_by_id(
-    user_id: int = Path(
-        ...,
-        gt=0,
-        description="ID único del usuario"
-    )
-):
-    """
-    Obtiene un usuario específico por su ID.
-    
-    Path Parameters:
-    - **user_id**: ID del usuario (debe ser mayor a 0)
-    """
-    if user_id not in fake_users_db:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Usuario con ID {user_id} no encontrado"
-        )
-    
-    return fake_users_db[user_id]
+async def get_user_by_id(user: dict = Depends(get_user_or_404)):
+    return user
 
 
 @router.post(
     "",
     response_model=UserResponse,
     status_code=status.HTTP_201_CREATED,
-    summary="Crear nuevo usuario",
-    description="Registra un nuevo usuario en el sistema con validación de datos",
-    responses={
-        201: {"description": "Usuario creado exitosamente"},
-        400: {"description": "Correo ya existe en el sistema"}
-    }
+    summary="Crear usuario",
+    description="Registra un usuario con correo unico.",
+    response_description="Usuario creado",
 )
-async def create_user(user: UserCreate):
-    """
-    Crea un nuevo usuario en el sistema.
-    
-    Body:
-    - **name**: Nombre del usuario (mínimo 3 caracteres)
-    - **email**: Correo electrónico único y válido
-    - **role**: Rol del usuario (admin, support, user)
-    - **is_active**: Estado del usuario
-    
-    Validaciones:
-    - El email debe ser único
-    - El nombre debe tener mínimo 3 caracteres
-    - El rol debe ser uno de los permitidos
-    """
-    global next_user_id
-    
-    # Validar que el email no esté duplicado
-    for user_data in fake_users_db.values():
-        if user_data["email"].lower() == user.email.lower():
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"El correo '{user.email}' ya está registrado en el sistema"
-            )
-    
-    # Crear nuevo usuario
-    new_user = {
-        "id": next_user_id,
-        "name": user.name,
-        "email": user.email,
-        "role": user.role,
-        "is_active": user.is_active
-    }
-    
-    fake_users_db[next_user_id] = new_user
-    next_user_id += 1
-    
-    return new_user
+async def create_new_user(user: UserCreate):
+    user_data = user.model_dump()
+    if email_exists(user_data["email"]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"El correo '{user.email}' ya esta registrado en el sistema",
+        )
+    return create_user(user_data)
+
+
+@router.put(
+    "/{user_id}",
+    response_model=UserResponse,
+    summary="Reemplazar usuario",
+    description="Reemplaza todos los campos de un usuario existente.",
+    response_description="Usuario actualizado completamente",
+)
+async def replace_existing_user(
+    user_data: UserReplace,
+    user: dict = Depends(get_user_or_404),
+):
+    if email_exists(user_data.email, exclude_user_id=user["id"]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"El correo '{user_data.email}' ya esta registrado en el sistema",
+        )
+    return replace_user(user["id"], user_data.model_dump())
+
+
+@router.patch(
+    "/{user_id}",
+    response_model=UserResponse,
+    summary="Actualizar usuario parcialmente",
+    description="Modifica solo los campos enviados por el cliente.",
+    response_description="Usuario actualizado parcialmente",
+)
+async def patch_existing_user(
+    user_data: UserPatch,
+    user: dict = Depends(get_user_or_404),
+):
+    changes = user_data.model_dump(exclude_unset=True)
+    if not changes:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Debe enviar al menos un campo para actualizar",
+        )
+    if "email" in changes and email_exists(
+        changes["email"], exclude_user_id=user["id"]
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"El correo '{user_data.email}' ya esta registrado en el sistema",
+        )
+    return update_user(user["id"], changes)
+
+
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Eliminar usuario",
+    description="Elimina un usuario existente y no retorna contenido.",
+    response_description="Usuario eliminado",
+)
+async def delete_existing_user(user: dict = Depends(get_user_or_404)):
+    delete_user(user["id"])

@@ -1,109 +1,35 @@
-# 📤 Guía de Subida a GitHub
+# Git Flow y GitHub
 
-Sigue estos pasos para subir tu proyecto device_systems a GitHub.
+El remoto configurado es `https://github.com/Pafuna08/device_systems.git`.
 
-## 1️⃣ Crear Repositorio en GitHub
-
-1. Inicia sesión en [github.com](https://github.com)
-2. Haz clic en **+** (esquina superior derecha) → **New repository**
-3. **Nombre del repositorio**: `device_systems`
-4. **Descripción**: "API REST para gestión de usuarios con FastAPI"
-5. Selecciona **Public** (para visibilidad)
-6. **NO** marques "Initialize this repository with"
-7. Haz clic en **Create repository**
-
-## 2️⃣ Conectar tu repositorio local
-
-En la terminal de tu proyecto:
+## Flujo de la guia 8
 
 ```bash
-# Navega al proyecto actual
-cd "C:\Users\PABLO 08\OneDrive\Escritorio\Python Avanzado\device_systems"
-
-# Verificar estado de Git
-git status
-
-# Agregar origin remoto con tu repositorio real
-git remote add origin https://github.com/Pafuna08/device_systems.git
-
-# Configurar rama principal
-git branch -M main
-
-# Subir todos los commits
-git push -u origin main
+git switch main
+git pull origin main
+git switch -c feature/crud-users
+git add app requirements.txt
+git commit -m "feat: implementar CRUD y capas de usuarios"
+git add README.md QUICKSTART.md INICIO_RAPIDO.md RESUMEN_PROYECTO.md GITHUB_SETUP.md
+git commit -m "docs: actualizar documentacion de la guia intermedia"
+git push -u origin feature/crud-users
 ```
 
-## 3️⃣ Verificar en GitHub
-
-1. Abre https://github.com/Pafuna08/device_systems
-2. Verifica que ves:
-   - ✅ Estructura de carpetas (`app/`, `app/schemas/`, `app/routes/`)
-   - ✅ Archivos principales (`main.py`, `requirements.txt`, `README.md`)
-   - ✅ Historial de commits actualizado con la entrega final del proyecto
-
-## 4️⃣ Flujo de Git Completo (Para Futuros Cambios)
+En GitHub se crea un Pull Request de `feature/crud-users` hacia `main`. Tras revisar las pruebas, se hace merge y se sincroniza:
 
 ```bash
-# 1. Hacer cambios en los archivos
-
-# 2. Ver cambios
-git status
-
-# 3. Agregar cambios
-git add .
-
-# 4. Crear commit con mensaje descriptivo
-git commit -m "feat: Descripción de la característica"
-
-# 5. Subir a GitHub
-git push origin main
+git switch main
+git pull origin main
+git branch -d feature/crud-users
+git push origin --delete feature/crud-users
 ```
 
-## 📋 Convenciones de Commits Utilizadas
+## Convenciones
 
-Ya hemos seguido convenciones profesionales:
+- `feat:` funcionalidad nueva.
+- `fix:` correccion.
+- `docs:` documentacion.
+- `test:` pruebas.
+- `chore:` configuracion.
 
-- **`feat:`** - Nueva característica (endpoints, modelos)
-- **`docs:`** - Cambios en documentación
-- **`test:`** - Agregar pruebas o colecciones
-- **`chore:`** - Cambios de configuración
-- **`fix:`** - Corrección de bugs
-
-Sigue estas convenciones en futuros commits.
-
-## 🔐 Autenticación GitHub (si es necesario)
-
-Si pides contraseña, usa un **Personal Access Token**:
-
-1. GitHub → Settings → Developer settings → Personal access tokens
-2. Genera nuevo token con permisos `repo`
-3. Usa el token como contraseña en la terminal
-
-## 📚 Historial de Commits Actual
-
-```
-2a1f7ce - docs: alinear estructura y evidencias con proyecto real
-ecd1dab - docs: actualizar rutas y repo real de GitHub
-c365927 - Entrega final device_systems
-d56cb21 - docs: Agregar guía de inicio rápido y checklist de completación
-389536f - docs: Resumen ejecutivo del proyecto completado
-d5be3cf - docs: Agregar guías de inicio rápido y subida a GitHub
-753e4af - chore: Actualizar dependencias a versiones compatibles con Python 3.14
-7aa2aeb - test: Agregar colecciones de Postman y Thunder Client
-1a93b6e - docs: Documentación completa de la API device_systems
-1f05af6 - feat: Crear aplicación FastAPI con cabeceras HTTP personalizadas
-842ff67 - feat: Implementar endpoints GET y POST para usuarios
-0f777c1 - feat: Implementar modelos de usuario con Pydantic v2
-```
-
-## ✨ Próximos Pasos Después de Subir
-
-1. Agregar descripción al repositorio en GitHub
-2. Crear `.gitignore` (ya está incluido ✅)
-3. Activar GitHub Pages si deseas (opcional)
-4. Crear Issues para features futuras
-5. Compartir el enlace con tu instructor
-
-## 🎉 ¡Listo!
-
-Tu proyecto está ahora en GitHub con historial de commits completo y profesional.
+No se deben subir `venv/`, tokens ni archivos `.env`. El `.gitignore` ya excluye el entorno virtual.

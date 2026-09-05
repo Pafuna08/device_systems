@@ -2,15 +2,16 @@
 Aplicación principal de FastAPI - device_systems
 API REST para la gestión de usuarios del sistema
 """
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, JSONResponse
 from app.routes import user_routes
 
 # Crear aplicación FastAPI
 app = FastAPI(
     title="device_systems API",
     description="API REST para la gestión de usuarios en el sistema device_systems",
-    version="1.0.0",
+    version="2.0.0",
+    contact={"name": "Pafuna08", "url": "https://github.com/Pafuna08/device_systems"},
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -84,6 +85,9 @@ async def root():
                         <li><strong>GET /users</strong> - Obtener todos los usuarios</li>
                         <li><strong>GET /users/{user_id}</strong> - Obtener usuario por ID</li>
                         <li><strong>POST /users</strong> - Crear nuevo usuario</li>
+                        <li><strong>PUT /users/{user_id}</strong> - Reemplazar usuario</li>
+                        <li><strong>PATCH /users/{user_id}</strong> - Actualizar parcialmente</li>
+                        <li><strong>DELETE /users/{user_id}</strong> - Eliminar usuario</li>
                         <li><strong>GET /users?role=admin</strong> - Filtrar por rol</li>
                         <li><strong>GET /users?is_active=true</strong> - Filtrar por estado</li>
                     </ul>
@@ -94,7 +98,7 @@ async def root():
                     <p>Todas las respuestas incluyen:</p>
                     <ul>
                         <li><strong>X-App-Name</strong>: device_systems</li>
-                        <li><strong>X-API-Version</strong>: 1.0</li>
+                        <li><strong>X-API-Version</strong>: 2.0</li>
                     </ul>
                 </div>
             </div>
@@ -111,7 +115,7 @@ async def health_check():
     return {
         "status": "healthy",
         "service": "device_systems",
-        "version": "1.0.0"
+        "version": "2.0.0"
     }
 
 
@@ -123,20 +127,20 @@ async def add_custom_headers(request, call_next):
     """
     response = await call_next(request)
     response.headers["X-App-Name"] = "device_systems"
-    response.headers["X-API-Version"] = "1.0"
+    response.headers["X-API-Version"] = "2.0"
     return response
 
 
 # Manejador de excepciones global
 @app.exception_handler(Exception)
-async def global_exception_handler(request, exc):
+async def global_exception_handler(request: Request, exc: Exception):
     """
     Manejador global de excepciones
     """
-    return {
-        "error": str(exc),
-        "message": "Ocurrió un error en el servidor"
-    }
+    return JSONResponse(
+        status_code=500,
+        content={"error": True, "message": "Ocurrio un error en el servidor"},
+    )
 
 
 if __name__ == "__main__":

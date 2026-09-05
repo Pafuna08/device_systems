@@ -32,6 +32,22 @@ class UserCreate(UserBase):
     pass
 
 
+class UserReplace(BaseModel):
+    """Modelo para reemplazar completamente un usuario."""
+    name: str = Field(..., min_length=3, max_length=100)
+    email: EmailStr
+    role: Literal["admin", "support", "user"]
+    is_active: bool
+
+
+class UserPatch(BaseModel):
+    """Modelo para actualizar parcialmente un usuario."""
+    name: Optional[str] = Field(None, min_length=3, max_length=100)
+    email: Optional[EmailStr] = None
+    role: Optional[Literal["admin", "support", "user"]] = None
+    is_active: Optional[bool] = None
+
+
 class UserResponse(UserBase):
     """Modelo de respuesta con ID incluido"""
     id: int = Field(..., description="ID único del usuario")
