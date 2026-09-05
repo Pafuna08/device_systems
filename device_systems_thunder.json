@@ -1,105 +1,16 @@
 {
-  "info": {
-    "name": "device_systems API - Thunder Client",
-    "description": "Colección de Thunder Client para pruebas de la API REST de gestión de usuarios",
-    "schema": "https://www.thunderclient.com"
-  },
+  "client": "Thunder Client",
+  "collectionName": "device_systems API v2",
+  "dateExported": "2026-09-05T00:00:00.000Z",
+  "version": "1.1",
   "requests": [
-    {
-      "id": "1",
-      "name": "Obtener todos los usuarios",
-      "method": "GET",
-      "url": "http://127.0.0.1:8000/users",
-      "headers": [],
-      "params": [],
-      "body": null,
-      "description": "Retorna la lista completa de usuarios registrados"
-    },
-    {
-      "id": "2",
-      "name": "Obtener usuario por ID (1)",
-      "method": "GET",
-      "url": "http://127.0.0.1:8000/users/1",
-      "headers": [],
-      "params": [],
-      "body": null,
-      "description": "Obtiene el usuario con ID 1"
-    },
-    {
-      "id": "3",
-      "name": "Filtrar por rol (admin)",
-      "method": "GET",
-      "url": "http://127.0.0.1:8000/users",
-      "headers": [],
-      "params": [
-        {
-          "key": "role",
-          "value": "admin"
-        }
-      ],
-      "body": null,
-      "description": "Filtra los usuarios por el rol 'admin'"
-    },
-    {
-      "id": "4",
-      "name": "Filtrar por estado activo",
-      "method": "GET",
-      "url": "http://127.0.0.1:8000/users",
-      "headers": [],
-      "params": [
-        {
-          "key": "is_active",
-          "value": "true"
-        }
-      ],
-      "body": null,
-      "description": "Filtra los usuarios activos del sistema"
-    },
-    {
-      "id": "5",
-      "name": "Crear usuario (Éxito)",
-      "method": "POST",
-      "url": "http://127.0.0.1:8000/users",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "params": [],
-      "body": {
-        "type": "json",
-        "raw": "{\n  \"name\": \"Carlos Mendoza\",\n  \"email\": \"carlos.mendoza@device-systems.com\",\n  \"role\": \"support\",\n  \"is_active\": true\n}"
-      },
-      "description": "Crea un nuevo usuario con datos válidos"
-    },
-    {
-      "id": "6",
-      "name": "Crear usuario (Email duplicado - Error)",
-      "method": "POST",
-      "url": "http://127.0.0.1:8000/users",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "params": [],
-      "body": {
-        "type": "json",
-        "raw": "{\n  \"name\": \"Admin Usuario Duplicado\",\n  \"email\": \"admin@device-systems.com\",\n  \"role\": \"user\",\n  \"is_active\": false\n}"
-      },
-      "description": "Intenta crear un usuario con un email que ya existe (debe fallar)"
-    },
-    {
-      "id": "7",
-      "name": "Health Check",
-      "method": "GET",
-      "url": "http://127.0.0.1:8000/health",
-      "headers": [],
-      "params": [],
-      "body": null,
-      "description": "Verifica que la API esté funcionando correctamente"
-    }
+    {"name": "Listar usuarios", "method": "GET", "url": "http://127.0.0.1:8000/users"},
+    {"name": "Consultar usuario", "method": "GET", "url": "http://127.0.0.1:8000/users/1"},
+    {"name": "Crear usuario", "method": "POST", "url": "http://127.0.0.1:8000/users", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\n  \"name\": \"Carlos Mendoza\",\n  \"email\": \"carlos.mendoza@device-systems.com\",\n  \"role\": \"support\",\n  \"is_active\": true\n}"}},
+    {"name": "Reemplazar usuario (PUT)", "method": "PUT", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"name\":\"Admin Actualizado\",\"email\":\"admin.updated@device-systems.com\",\"role\":\"admin\",\"is_active\":true}"}},
+    {"name": "Actualizar parcialmente (PATCH)", "method": "PATCH", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"role\":\"support\"}"}},
+    {"name": "Eliminar usuario (DELETE)", "method": "DELETE", "url": "http://127.0.0.1:8000/users/3"},
+    {"name": "Error usuario inexistente", "method": "GET", "url": "http://127.0.0.1:8000/users/999"},
+    {"name": "Error PATCH vacio", "method": "PATCH", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{}"}}
   ]
 }
