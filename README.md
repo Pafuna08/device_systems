@@ -85,7 +85,14 @@ Asi se centraliza la busqueda y el error 404 sin repetirlo en cada endpoint.
 
 ## Pruebas y evidencias
 
-Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json` en Thunder Client. Revisar Swagger en `/docs` y ReDoc en `/redoc`. La carpeta `evidencias/` conserva capturas del proyecto y las nuevas pruebas se validan con los endpoints CRUD.
+Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json` en Thunder Client. Revisar Swagger en `/docs` y ReDoc en `/redoc`. La carpeta `evidencias/` contiene capturas de la guia anterior y debe incorporar las nuevas capturas con estos nombres:
+
+- `6_swagger_crud.png`: Swagger con PUT, PATCH y DELETE.
+- `7_redoc_crud.png`: ReDoc con los endpoints documentados.
+- `8_put_exitoso.png`: PUT con respuesta 200.
+- `9_patch_exitoso.png`: PATCH con respuesta 200.
+- `10_delete_exitoso.png`: DELETE con respuesta 204.
+- `11_errores_crud.png`: errores 400, 404 y 422.
 
 ## Git Flow aplicado
 
