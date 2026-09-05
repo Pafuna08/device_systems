@@ -72,6 +72,20 @@ curl -X PATCH http://127.0.0.1:8000/users/1 -H "Content-Type: application/json" 
 curl -X DELETE http://127.0.0.1:8000/users/1
 ```
 
+Respuestas esperadas:
+
+```json
+{
+    "id": 1,
+    "name": "Admin Actualizado",
+    "email": "admin.actualizado@device-systems.com",
+    "role": "support",
+    "is_active": true
+}
+```
+
+`POST` responde `201 Created`, mientras que `PUT` y `PATCH` responden `200 OK`. `DELETE` responde `204 No Content` sin cuerpo.
+
 ## Errores y Dependency Injection
 
 - `400`: correo duplicado o PATCH sin campos.
