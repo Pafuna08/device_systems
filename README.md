@@ -89,6 +89,7 @@ Importar `device_systems_postman.json` en Postman o `device_systems_thunder.json
 
 - [`6_swagger_crud.png`](evidencias/6_swagger_crud.png): Swagger con la API version 2.0.0.
 - [`7_redoc_crud.png`](evidencias/7_redoc_crud.png): ReDoc con la documentacion de la API.
+- [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md): registro reproducible de estados HTTP y respuestas.
 - `8_put_exitoso.png`: PUT con respuesta 200.
 - `9_patch_exitoso.png`: PATCH con respuesta 200.
 - `10_delete_exitoso.png`: DELETE con respuesta 204.
