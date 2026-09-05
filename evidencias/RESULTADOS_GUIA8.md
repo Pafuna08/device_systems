@@ -30,4 +30,9 @@ Despues de eliminar el usuario 3, la consulta retorno:
 {"detail":"Usuario con ID 3 no encontrado"}
 ```
 
-Las capturas visuales `6_swagger_crud.png` y `7_redoc_crud.png` documentan la interfaz. Las capturas adicionales de respuestas pueden guardarse con los nombres `8_put_patch_resultado.png` y `10_delete_error_404.png`.
+Capturas visuales incorporadas:
+
+- `6_swagger_crud.png`: Swagger con los endpoints CRUD.
+- `7_redoc_crud.png`: ReDoc con la documentacion OpenAPI.
+- `8_put_patch_resultado.png`: respuesta exitosa despues de PUT y PATCH.
+- `10_delete_error_404.png`: respuesta 404 despues de eliminar el usuario.
