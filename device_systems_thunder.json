@@ -11,6 +11,10 @@
     {"name": "Actualizar parcialmente (PATCH)", "method": "PATCH", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"role\":\"support\"}"}},
     {"name": "Eliminar usuario (DELETE)", "method": "DELETE", "url": "http://127.0.0.1:8000/users/3"},
     {"name": "Error usuario inexistente", "method": "GET", "url": "http://127.0.0.1:8000/users/999"},
-    {"name": "Error PATCH vacio", "method": "PATCH", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{}"}}
+    {"name": "Error PUT usuario inexistente", "method": "PUT", "url": "http://127.0.0.1:8000/users/999", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"name\":\"Usuario\",\"email\":\"usuario@device-systems.com\",\"role\":\"user\",\"is_active\":true}"}},
+    {"name": "Error PATCH vacio", "method": "PATCH", "url": "http://127.0.0.1:8000/users/1", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{}"}},
+    {"name": "Error DELETE usuario inexistente", "method": "DELETE", "url": "http://127.0.0.1:8000/users/999"},
+    {"name": "Error correo duplicado", "method": "POST", "url": "http://127.0.0.1:8000/users", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"name\":\"Duplicado\",\"email\":\"admin@device-systems.com\",\"role\":\"user\",\"is_active\":true}"}},
+    {"name": "Error datos invalidos", "method": "POST", "url": "http://127.0.0.1:8000/users", "headers": [{"name": "Content-Type", "value": "application/json"}], "body": {"type": "json", "raw": "{\"name\":\"A\",\"email\":\"correo-invalido\",\"role\":\"unknown\",\"is_active\":true}"}}
   ]
 }
