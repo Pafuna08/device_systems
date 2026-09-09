@@ -1,4 +1,4 @@
-# Resultados de pruebas funcionales
+# Resultados de pruebas funcionales y persistencia EV09
 
 Pruebas ejecutadas contra `http://127.0.0.1:8000` el 5 de septiembre de 2026.
 
@@ -53,3 +53,9 @@ Capturas visuales incorporadas:
 - `14_error_patch_vacio.png`: PATCH vacio con respuesta 400.
 - `15_error_put_inexistente.png`: PUT inexistente con respuesta 404.
 - `16_error_delete_inexistente.png`: DELETE inexistente con respuesta 404.
+
+## Persistencia SQLAlchemy
+
+- La tabla `users` se crea en `device_systems.db` al iniciar.
+- La evidencia del esquema está en [`17_base_datos_sqlite.md`](17_base_datos_sqlite.md).
+- Los datos creados permanecen disponibles después de cerrar y volver a abrir la sesión, porque se almacenan en SQLite y no en un diccionario en memoria.
