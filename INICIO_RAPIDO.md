@@ -1,6 +1,6 @@
-# Inicio rapido
+# Inicio rapido - EV09 SQLAlchemy
 
-## Checklist de la guia intermedia
+## Checklist de la guia SQLAlchemy
 
 - [x] CRUD completo de `/users`.
 - [x] PUT completo y PATCH parcial.
@@ -10,6 +10,9 @@
 - [x] Swagger/OpenAPI version `2.0.0`, tags, summaries y descripciones.
 - [x] Colecciones para Postman y Thunder Client.
 - [x] Flujo Git Flow documentado.
+- [x] SQLite y SQLAlchemy con sesiones persistentes.
+- [x] Modelo `User` con constraints y `created_at`.
+- [x] CRUD migrado desde memoria a base de datos.
 
 ## Comando
 
