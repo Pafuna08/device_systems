@@ -64,6 +64,9 @@ coverage.xml
 # Uvicorn logs
 *.log
 
+# Base de datos local SQLite
+device_systems.db
+
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db
