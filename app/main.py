@@ -4,7 +4,44 @@ API REST para la gestión de usuarios del sistema
 """
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
+from sqlalchemy import select
+
+from app.database.connection import Base, SessionLocal, engine
+from app.models.user_model import User
 from app.routes import user_routes
+
+
+def initialize_database() -> None:
+    Base.metadata.create_all(bind=engine)
+    with SessionLocal() as db:
+        if db.scalar(select(User.id).limit(1)) is not None:
+            return
+        db.add_all(
+            [
+                User(
+                    name="Admin Usuario",
+                    email="admin@device-systems.com",
+                    role="admin",
+                    is_active=True,
+                ),
+                User(
+                    name="Support Usuario",
+                    email="support@device-systems.com",
+                    role="support",
+                    is_active=True,
+                ),
+                User(
+                    name="Usuario Normal",
+                    email="user@device-systems.com",
+                    role="user",
+                    is_active=False,
+                ),
+            ]
+        )
+        db.commit()
+
+
+initialize_database()
 
 # Crear aplicación FastAPI
 app = FastAPI(

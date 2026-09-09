@@ -1,6 +1,6 @@
-# Resumen del proyecto
+# Resumen del proyecto EV09
 
-`device_systems` evoluciono de una API basica GET/POST a una API REST con CRUD completo para usuarios.
+`device_systems` evoluciono de una API con datos en memoria a una API REST con CRUD persistente en SQLite mediante SQLAlchemy.
 
 ## Cambios de la guia intermedia
 
@@ -10,10 +10,12 @@
 - Los modelos `UserReplace` y `UserPatch` distinguen PUT de PATCH.
 - Las rutas usan estados HTTP explicitos y documentacion OpenAPI.
 - Se actualizo la documentacion, las colecciones y el flujo Git Flow.
+- SQLAlchemy crea la tabla `users` con email unico, roles validos, nombre obligatorio, estado y fecha de creacion.
+- `get_db()` inyecta sesiones y cada operacion hace commit o rollback en la base.
 
 ## Verificacion
 
-Se comprobaron GET, POST, PUT, PATCH y DELETE con `TestClient`, ademas de usuario inexistente, PATCH vacio y correo duplicado. El contrato OpenAPI confirma los seis endpoints de usuarios.
+Se comprobaron GET, POST, PUT, PATCH y DELETE con `TestClient` sobre SQLite, ademas de usuario inexistente, PATCH vacio, correo duplicado, filtros, ordenamiento y datos invalidos. El contrato OpenAPI confirma los seis endpoints de usuarios.
 
 ## Presentacion de cinco minutos
 
