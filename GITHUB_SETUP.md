@@ -1,38 +1,39 @@
-# Git Flow y GitHub
+# Git Flow y GitHub - EV09 SQLAlchemy
 
 El remoto configurado es `https://github.com/Pafuna08/device_systems.git`.
 
-## Flujo de la guia 8
+## Flujo de la guia 9
 
 ```bash
 git switch main
 git pull origin main
-git switch -c feature/crud-users
-git add app requirements.txt
-git commit -m "feat: implementar CRUD y capas de usuarios"
+git switch -c feature/sqlalchemy-persistence
+git add app requirements.txt .gitignore
+git commit -m "feat: configurar SQLite y modelo SQLAlchemy"
+git add app/routes app/services app/dependencies
+git commit -m "feat: migrar CRUD de usuarios a SQLAlchemy"
 git add README.md QUICKSTART.md INICIO_RAPIDO.md RESUMEN_PROYECTO.md GITHUB_SETUP.md
 git commit -m "docs: actualizar documentacion de la guia intermedia"
-git push -u origin feature/crud-users
+git push -u origin feature/sqlalchemy-persistence
 ```
 
-Para completar las evidencias se uso tambien la rama `feature/evidencias-guia8`:
+Para completar las evidencias de persistencia se usa la misma rama:
 
 ```bash
 git switch main
 git pull origin main
-git switch -c feature/evidencias-guia8
-git add evidencias README.md
-git commit -m "docs: incorporar capturas funcionales de la guia 8"
-git push -u origin feature/evidencias-guia8
+git add README.md evidencias
+git commit -m "docs: actualizar evidencias de persistencia"
+git push -u origin feature/sqlalchemy-persistence
 ```
 
-En GitHub se crea un Pull Request de cada rama hacia `main`. En este proyecto, los Pull Requests de implementacion y evidencias fueron fusionados. Tras revisar las pruebas, se sincroniza:
+En GitHub se crea un Pull Request de `feature/sqlalchemy-persistence` hacia `main`. Tras revisar las pruebas, se fusiona y se sincroniza:
 
 ```bash
 git switch main
 git pull origin main
-git branch -d feature/crud-users
-git push origin --delete feature/crud-users
+git branch -d feature/sqlalchemy-persistence
+git push origin --delete feature/sqlalchemy-persistence
 ```
 
 ## Convenciones
