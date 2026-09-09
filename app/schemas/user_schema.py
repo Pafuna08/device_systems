@@ -1,7 +1,9 @@
 """
 Esquemas de validación de usuarios con Pydantic v2
 """
-from pydantic import BaseModel, EmailStr, Field
+from datetime import datetime
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional, Literal
 
 
@@ -32,12 +34,12 @@ class UserCreate(UserBase):
     pass
 
 
-class UserReplace(BaseModel):
+class UserUpdate(UserBase):
     """Modelo para reemplazar completamente un usuario."""
-    name: str = Field(..., min_length=3, max_length=100)
-    email: EmailStr
-    role: Literal["admin", "support", "user"]
-    is_active: bool
+    pass
+
+
+UserReplace = UserUpdate
 
 
 class UserPatch(BaseModel):
@@ -51,9 +53,9 @@ class UserPatch(BaseModel):
 class UserResponse(UserBase):
     """Modelo de respuesta con ID incluido"""
     id: int = Field(..., description="ID único del usuario")
+    created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserResponseWithoutEmail(BaseModel):
@@ -63,8 +65,7 @@ class UserResponseWithoutEmail(BaseModel):
     role: str
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserListResponse(BaseModel):
@@ -72,5 +73,4 @@ class UserListResponse(BaseModel):
     users: list[UserResponse]
     total: int = Field(..., description="Total de usuarios")
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
