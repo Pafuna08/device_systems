@@ -132,7 +132,30 @@ Las colecciones `device_systems_postman.json` y `device_systems_thunder.json` co
 - [`15_error_put_inexistente.png`](evidencias/15_error_put_inexistente.png)
 - [`16_error_delete_inexistente.png`](evidencias/16_error_delete_inexistente.png)
 - [`17_base_datos_sqlite.md`](evidencias/17_base_datos_sqlite.md): esquema y verificacion de SQLite.
+- [`18_estructura_proyecto_ev09.png`](evidencias/18_estructura_proyecto_ev09.png): estructura real de carpetas y API en ejecucion.
+- [`19_base_datos_sqlite_ev09.png`](evidencias/19_base_datos_sqlite_ev09.png): tabla `users` y registros de SQLite.
+- [`20_swagger_sqlalchemy.png`](evidencias/20_swagger_sqlalchemy.png): Swagger de la version persistente.
+- [`21_redoc_ev09.png`](evidencias/21_redoc_ev09.png): ReDoc de la API persistente.
+- [`22_post_usuario_sqlalchemy.png`](evidencias/22_post_usuario_sqlalchemy.png): POST persistente `201`.
+- [`23_get_lista_sqlalchemy.png`](evidencias/23_get_lista_sqlalchemy.png): listado con `created_at`.
+- [`24_get_usuario_id_sqlalchemy.png`](evidencias/24_get_usuario_id_sqlalchemy.png): consulta por ID.
+- [`25_filtro_rol_sqlalchemy.png`](evidencias/25_filtro_rol_sqlalchemy.png): filtro por rol.
+- [`26_filtro_estado_sqlalchemy.png`](evidencias/26_filtro_estado_sqlalchemy.png): filtro por estado.
+- [`27_ordenamiento_sqlalchemy.png`](evidencias/27_ordenamiento_sqlalchemy.png): ordenamiento por nombre.
+- [`28_put_sqlalchemy.png`](evidencias/28_put_sqlalchemy.png): actualización completa persistente.
+- [`29_patch_sqlalchemy.png`](evidencias/29_patch_sqlalchemy.png): actualización parcial persistente.
+- [`30_delete_sqlalchemy.png`](evidencias/30_delete_sqlalchemy.png): eliminación persistente `204`.
+- [`31_usuario_eliminado_404.png`](evidencias/31_usuario_eliminado_404.png): usuario eliminado ya no encontrado.
+- [`32_error_email_duplicado_sqlalchemy.png`](evidencias/32_error_email_duplicado_sqlalchemy.png): email duplicado `400`.
+- [`33_error_validacion_sqlalchemy.png`](evidencias/33_error_validacion_sqlalchemy.png): validación `422`.
+- [`34_error_patch_vacio_sqlalchemy.png`](evidencias/34_error_patch_vacio_sqlalchemy.png): PATCH vacío `400`.
+- [`35_error_put_inexistente_sqlalchemy.png`](evidencias/35_error_put_inexistente_sqlalchemy.png): PUT inexistente `404`.
+- [`36_error_delete_inexistente_sqlalchemy.png`](evidencias/36_error_delete_inexistente_sqlalchemy.png): DELETE inexistente `404`.
+- [`37_persistencia_entre_sesiones.png`](evidencias/37_persistencia_entre_sesiones.png): lectura desde un segundo proceso.
+- [`38_gitflow_ev09.png`](evidencias/38_gitflow_ev09.png): ramas y Pull Requests reales.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md)
+
+Las pruebas EV09 de endpoints, persistencia y errores fueron ejecutadas sobre la API SQLAlchemy actual y sus capturas están almacenadas en esta carpeta.
 
 El archivo SQLite se genera al ejecutar la API y está excluido de Git. Su estructura reproducible queda definida por el modelo SQLAlchemy y `Base.metadata.create_all()`.
 
@@ -146,10 +169,12 @@ La migración se desarrolla en ramas con commits trazables:
 
 ```text
 main
-└── feature/sqlalchemy-persistence
+├── feature/sqlalchemy-persistence
     ├── feat: configurar SQLite y modelo SQLAlchemy
     ├── feat: migrar CRUD de usuarios a SQLAlchemy
     └── docs: actualizar evidencias de persistencia
+└── feature/evidencias-ev09
+    └── docs: capturar pruebas reales de EV09
 ```
 
 ```bash
