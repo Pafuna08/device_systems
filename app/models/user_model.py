@@ -1,9 +1,11 @@
 """Modelo SQLAlchemy de la tabla users."""
 
+from __future__ import annotations
+
 from datetime import datetime
 
 from sqlalchemy import Boolean, CheckConstraint, DateTime, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.connection import Base
 
@@ -26,4 +28,10 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.utcnow, nullable=False
+    )
+
+    loans: Mapped[list["Loan"]] = relationship(
+        "Loan",
+        back_populates="user",
+        cascade="all, delete-orphan",
     )
