@@ -10,6 +10,7 @@ python -m uvicorn app.main:app --reload
 
 Abrir `http://127.0.0.1:8000/docs`.
 La primera ejecución crea `device_systems.db` con tres usuarios iniciales.
+La base se excluye de Git; su estructura se reproduce desde `app/models/user_model.py`.
 
 ## Pruebas rapidas
 
@@ -20,4 +21,4 @@ curl -X PATCH http://127.0.0.1:8000/users/1 -H "Content-Type: application/json" 
 curl -X DELETE http://127.0.0.1:8000/users/3
 ```
 
-Para probar errores, usa `/users/999`, un correo repetido y `PATCH /users/1` con `{}`. Las colecciones contienen ejemplos adicionales. Puedes ordenar con `?sort_by=name&sort_order=asc`.
+Para probar errores, usa `/users/999`, un correo repetido y `PATCH /users/1` con `{}`. Las colecciones contienen ejemplos adicionales. Puedes ordenar con `?sort_by=name&sort_order=asc`. Revisa `evidencias/17_base_datos_sqlite.md` y las capturas `18` a `38` para la entrega EV09.

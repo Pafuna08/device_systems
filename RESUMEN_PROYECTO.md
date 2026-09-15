@@ -2,16 +2,19 @@
 
 `device_systems` evoluciono de una API con datos en memoria a una API REST con CRUD persistente en SQLite mediante SQLAlchemy.
 
-## Cambios de la guia intermedia
+## Cambios de la guia EV09
 
-- La persistencia simulada esta en `app/data/users_db.py`.
+- La persistencia simulada fue reemplazada por SQLite en `app/database/connection.py`.
+- El modelo ORM esta en `app/models/user_model.py`.
 - La logica de negocio esta en `app/services/user_service.py`.
+- Las sesiones se inyectan desde `app/dependencies/database_dependency.py`.
 - La dependencia `get_user_or_404` esta en `app/dependencies/user_dependencies.py`.
-- Los modelos `UserReplace` y `UserPatch` distinguen PUT de PATCH.
+- Los schemas `UserCreate`, `UserUpdate` y `UserPatch` distinguen entrada, PUT y PATCH.
 - Las rutas usan estados HTTP explicitos y documentacion OpenAPI.
 - Se actualizo la documentacion, las colecciones y el flujo Git Flow.
 - SQLAlchemy crea la tabla `users` con email unico, roles validos, nombre obligatorio, estado y fecha de creacion.
 - `get_db()` inyecta sesiones y cada operacion hace commit o rollback en la base.
+- Las evidencias `18` a `38` documentan estructura, SQLite, CRUD, errores, persistencia y Git Flow.
 
 ## Verificacion
 

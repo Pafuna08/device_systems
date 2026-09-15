@@ -13,6 +13,8 @@
 - [x] SQLite y SQLAlchemy con sesiones persistentes.
 - [x] Modelo `User` con constraints y `created_at`.
 - [x] CRUD migrado desde memoria a base de datos.
+- [x] Filtros y ordenamiento ejecutados mediante consultas SQLAlchemy.
+- [x] Evidencias EV09 de estructura, SQLite, CRUD, errores y persistencia.
 
 ## Comando
 
