@@ -135,6 +135,7 @@ Las colecciones `device_systems_postman.json` y `device_systems_thunder.json` co
 - [`18_estructura_proyecto_ev09.png`](evidencias/18_estructura_proyecto_ev09.png): estructura real de carpetas y API en ejecucion.
 - [`19_base_datos_sqlite_ev09.png`](evidencias/19_base_datos_sqlite_ev09.png): tabla `users` y registros de SQLite.
 - [`20_swagger_sqlalchemy.png`](evidencias/20_swagger_sqlalchemy.png): Swagger de la version persistente.
+- [`21_swagger_ev09.png`](evidencias/21_swagger_ev09.png): Swagger capturado desde la API EV09.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md)
 
 Las pruebas EV09 de endpoints y errores fueron ejecutadas sobre la API actual; sus capturas se muestran en la evidencia de trabajo de esta entrega. El entorno del navegador no permite transferir automáticamente esas imágenes internas a la carpeta local, por lo que solo se enlazan aquí los PNG que existen físicamente en el repositorio.
