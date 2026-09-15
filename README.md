@@ -132,7 +132,12 @@ Las colecciones `device_systems_postman.json` y `device_systems_thunder.json` co
 - [`15_error_put_inexistente.png`](evidencias/15_error_put_inexistente.png)
 - [`16_error_delete_inexistente.png`](evidencias/16_error_delete_inexistente.png)
 - [`17_base_datos_sqlite.md`](evidencias/17_base_datos_sqlite.md): esquema y verificacion de SQLite.
+- [`18_estructura_proyecto_ev09.png`](evidencias/18_estructura_proyecto_ev09.png): estructura real de carpetas y API en ejecucion.
+- [`19_base_datos_sqlite_ev09.png`](evidencias/19_base_datos_sqlite_ev09.png): tabla `users` y registros de SQLite.
+- [`20_swagger_sqlalchemy.png`](evidencias/20_swagger_sqlalchemy.png): Swagger de la version persistente.
 - [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md)
+
+Las pruebas EV09 de endpoints y errores fueron ejecutadas sobre la API actual; sus capturas se muestran en la evidencia de trabajo de esta entrega. El entorno del navegador no permite transferir automáticamente esas imágenes internas a la carpeta local, por lo que solo se enlazan aquí los PNG que existen físicamente en el repositorio.
 
 El archivo SQLite se genera al ejecutar la API y está excluido de Git. Su estructura reproducible queda definida por el modelo SQLAlchemy y `Base.metadata.create_all()`.
 
@@ -146,10 +151,12 @@ La migración se desarrolla en ramas con commits trazables:
 
 ```text
 main
-└── feature/sqlalchemy-persistence
+├── feature/sqlalchemy-persistence
     ├── feat: configurar SQLite y modelo SQLAlchemy
     ├── feat: migrar CRUD de usuarios a SQLAlchemy
     └── docs: actualizar evidencias de persistencia
+└── feature/evidencias-ev09
+    └── docs: capturar pruebas reales de EV09
 ```
 
 ```bash

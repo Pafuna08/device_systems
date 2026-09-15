@@ -17,23 +17,24 @@ git commit -m "docs: actualizar documentacion de la guia intermedia"
 git push -u origin feature/sqlalchemy-persistence
 ```
 
-Para completar las evidencias de persistencia se usa la misma rama:
+Para completar las evidencias de persistencia se usa una rama separada:
 
 ```bash
 git switch main
 git pull origin main
+git switch -c feature/evidencias-ev09
 git add README.md evidencias
-git commit -m "docs: actualizar evidencias de persistencia"
-git push -u origin feature/sqlalchemy-persistence
+git commit -m "docs: publicar evidencias de EV09"
+git push -u origin feature/evidencias-ev09
 ```
 
-En GitHub se crea un Pull Request de `feature/sqlalchemy-persistence` hacia `main`. Tras revisar las pruebas, se fusiona y se sincroniza:
+En GitHub se crea un Pull Request de `feature/evidencias-ev09` hacia `main`. Tras revisar las pruebas, se fusiona y se sincroniza:
 
 ```bash
 git switch main
 git pull origin main
-git branch -d feature/sqlalchemy-persistence
-git push origin --delete feature/sqlalchemy-persistence
+git branch -d feature/evidencias-ev09
+git push origin --delete feature/evidencias-ev09
 ```
 
 ## Convenciones
