@@ -59,9 +59,10 @@ class UserResponse(UserBase):
 
 
 class UserResponseWithoutEmail(BaseModel):
-    """Modelo de respuesta que oculta el email"""
+    """Modelo de respuesta que incluye datos básicos del usuario."""
     id: int
     name: str
+    email: str
     role: str
     is_active: bool
 

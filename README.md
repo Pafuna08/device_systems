@@ -1,16 +1,19 @@
-# device_systems API
+# device_systems
 
-API REST para administrar usuarios con FastAPI, Pydantic v2 y SQLAlchemy sobre SQLite. Esta version implementa la guia GA1-220501096-01-AA1-EV09: persistencia real, CRUD completo, constraints, errores HTTP, Swagger/OpenAPI y Dependency Injection.
+API REST para gestionar usuarios, dispositivos y préstamos con FastAPI, SQLAlchemy, Alembic y SQLite. Esta versión corresponde a la guía de actividades avanzadas para migraciones, asociaciones y consultas con joins.
 
-## Tecnologias
+## Tecnologías
 
 - Python 3.14
-- FastAPI y Uvicorn
-- Pydantic v2 y email-validator
-- SQLAlchemy 2 y SQLite
-- Postman, Thunder Client, Git y GitHub
+- FastAPI
+- SQLAlchemy 2
+- Alembic
+- Pydantic v2
+- SQLite
+- Uvicorn
+- pytest
 
-## Instalacion y ejecucion
+## Instalación y ejecución
 
 ```powershell
 python -m venv venv
@@ -19,173 +22,220 @@ pip install -r requirements.txt
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-La base local `device_systems.db` se crea automaticamente al iniciar la API. Documentacion: `http://127.0.0.1:8000/docs` y `http://127.0.0.1:8000/redoc`.
+Documentación interactiva:
+
+- Swagger: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
 
 ## Estructura del proyecto
 
 ```text
-app/
-├── main.py
-├── database/connection.py
-├── models/user_model.py
-├── dependencies/database_dependency.py
-├── dependencies/user_dependencies.py
-├── routes/user_routes.py
-├── schemas/user_schema.py
-└── services/user_service.py
+device_systems/
+├── alembic/
+│   ├── versions/
+│   ├── env.py
+│   └── README
+├── app/
+│   ├── database/
+│   │   └── connection.py
+│   ├── dependencies/
+│   │   ├── database_dependency.py
+│   │   └── user_dependencies.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user_model.py
+│   │   ├── device_model.py
+│   │   └── loan_model.py
+│   ├── routes/
+│   │   ├── user_routes.py
+│   │   ├── device_routes.py
+│   │   └── loan_routes.py
+│   ├── schemas/
+│   │   ├── user_schema.py
+│   │   ├── device_schema.py
+│   │   └── loan_schema.py
+│   ├── services/
+│   │   ├── user_service.py
+│   │   ├── device_service.py
+│   │   └── loan_service.py
+│   ├── main.py
+│   └── __init__.py
+├── alembic.ini
+├── requirements.txt
+├── device_systems.db
+├── tests/
+│   └── test_device_systems_api.py
+├── README.md
+└── .gitignore
 ```
 
-`database` configura engine, sesiones y Base declarativa. `models` representa tablas SQLAlchemy. `schemas` valida entrada y salida con Pydantic. `services` concentra consultas CRUD. `routes` expone HTTP. `dependencies` inyecta sesiones y usuarios.
+## Configuración de Alembic
 
-## Persistencia, modelo y schemas
-
-`app/database/connection.py` usa `sqlite:///./device_systems.db`, `create_engine`, `SessionLocal` y `Base`. `app/models/user_model.py` define la tabla `users` con `id`, `name`, `email`, `role`, `is_active` y `created_at`.
-
-El modelo SQLAlchemy representa la tabla y sus restricciones en la base de datos. Los schemas Pydantic (`UserCreate`, `UserUpdate`, `UserPatch` y `UserResponse`) representan los datos que entran y salen por la API; no sustituyen al modelo ORM.
-
-Constraints aplicados: `id` como primary key, `email` como `unique` y obligatorio, `is_active` por defecto `True`, `created_at` automático, nombre mínimo de tres caracteres y roles limitados a `admin`, `support` y `user`.
-
-## Endpoints
-
-| Metodo | Ruta | Exito | Funcion |
-|---|---|---:|---|
-| GET | `/users` | 200 | Lista, filtra y ordena usuarios desde SQLite |
-| GET | `/users/{user_id}` | 200 | Consulta por ID |
-| POST | `/users` | 201 | Crea un usuario en la base |
-| PUT | `/users/{user_id}` | 200 | Reemplaza todos los campos |
-| PATCH | `/users/{user_id}` | 200 | Actualiza solo campos enviados |
-| DELETE | `/users/{user_id}` | 204 | Elimina de la base sin cuerpo |
-
-Filtros: `/users?role=admin` y `/users?is_active=true`. Ordenamiento: `sort_by=name|created_at` y `sort_order=asc|desc`.
-
-## Ejemplos de peticiones y respuestas
-
-Crear usuario:
-
-```json
-{"name":"Carlos Mendoza","email":"carlos@device-systems.com","role":"support","is_active":true}
-```
-
-Respuesta `201 Created`:
-
-```json
-{"id":4,"name":"Carlos Mendoza","email":"carlos@device-systems.com","role":"support","is_active":true,"created_at":"2026-09-09T19:31:19"}
-```
-
-Actualizar parcialmente:
+Se inicializó Alembic desde la raíz y se configuró para apuntar a SQLite y a la metadata global de SQLAlchemy:
 
 ```bash
-curl -X PATCH http://127.0.0.1:8000/users/1 -H "Content-Type: application/json" -d "{\"role\":\"support\"}"
+alembic init alembic
+alembic revision --autogenerate -m "create devices and loans tables"
+alembic upgrade head
+alembic history
 ```
 
-Respuesta `200 OK`:
-
-```json
-{"id":1,"name":"Admin Usuario","email":"admin@device-systems.com","role":"support","is_active":true,"created_at":"2026-09-09T19:31:19"}
-```
-
-Eliminar:
-
-```bash
-curl -X DELETE http://127.0.0.1:8000/users/1
-```
-
-Respuesta: `204 No Content`, sin cuerpo.
-
-## Códigos y manejo de errores
-
-- `201 Created`: usuario creado.
-- `200 OK`: consultas y actualizaciones correctas.
-- `204 No Content`: eliminación correcta.
-- `400 Bad Request`: correo duplicado o PATCH sin campos.
-- `404 Not Found`: usuario inexistente.
-- `422 Unprocessable Entity`: datos inválidos, email o rol no permitido.
-
-Las rutas usan `HTTPException` para errores de negocio. La constraint `unique` de SQLite protege el correo y el servicio captura `IntegrityError` al crear. Pydantic valida formato de email, nombre, rol y tipos antes de consultar la base.
-
-## Dependency Injection
-
-`get_db()` crea una sesión SQLAlchemy por solicitud y la cierra en `finally`. `get_user_or_404()` recibe esa sesión con `Depends()` y reutiliza la consulta por ID en GET, PUT, PATCH y DELETE.
-
-```python
-def get_user_or_404(user_id: int = Path(..., gt=0), db: Session = Depends(get_db)) -> User:
-    user = get_user_by_id(db, user_id)
-    if user is None:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return user
-```
-
-## Pruebas y evidencias
-
-Las colecciones `device_systems_postman.json` y `device_systems_thunder.json` contienen las peticiones CRUD, filtros y errores. La carpeta `evidencias/` incluye Swagger, ReDoc, estructura y pruebas de endpoints:
-
-- [`6_swagger_crud.png`](evidencias/6_swagger_crud.png)
-- [`7_redoc_crud.png`](evidencias/7_redoc_crud.png)
-- [`7.1_redoc_crud.png`](evidencias/7.1_redoc_crud.png)
-- [`8_post_exitoso.png`](evidencias/8_post_exitoso.png)
-- [`9_put_exitoso.png`](evidencias/9_put_exitoso.png)
-- [`10_patch_exitoso.png`](evidencias/10_patch_exitoso.png)
-- [`11_delete_exitoso.png`](evidencias/11_delete_exitoso.png)
-- [`12_error_correo_duplicado.png`](evidencias/12_error_correo_duplicado.png)
-- [`13_error_datos_invalidos.png`](evidencias/13_error_datos_invalidos.png)
-- [`14_error_patch_vacio.png`](evidencias/14_error_patch_vacio.png)
-- [`15_error_put_inexistente.png`](evidencias/15_error_put_inexistente.png)
-- [`16_error_delete_inexistente.png`](evidencias/16_error_delete_inexistente.png)
-- [`17_base_datos_sqlite.md`](evidencias/17_base_datos_sqlite.md): esquema y verificacion de SQLite.
-- [`18_estructura_proyecto_ev09.png`](evidencias/18_estructura_proyecto_ev09.png): estructura real de carpetas y API en ejecucion.
-- [`19_base_datos_sqlite_ev09.png`](evidencias/19_base_datos_sqlite_ev09.png): tabla `users` y registros de SQLite.
-- [`20_swagger_sqlalchemy.png`](evidencias/20_swagger_sqlalchemy.png): Swagger de la version persistente.
-- [`21_redoc_ev09.png`](evidencias/21_redoc_ev09.png): ReDoc de la API persistente.
-- [`22_post_usuario_sqlalchemy.png`](evidencias/22_post_usuario_sqlalchemy.png): POST persistente `201`.
-- [`23_get_lista_sqlalchemy.png`](evidencias/23_get_lista_sqlalchemy.png): listado con `created_at`.
-- [`24_get_usuario_id_sqlalchemy.png`](evidencias/24_get_usuario_id_sqlalchemy.png): consulta por ID.
-- [`25_filtro_rol_sqlalchemy.png`](evidencias/25_filtro_rol_sqlalchemy.png): filtro por rol.
-- [`26_filtro_estado_sqlalchemy.png`](evidencias/26_filtro_estado_sqlalchemy.png): filtro por estado.
-- [`27_ordenamiento_sqlalchemy.png`](evidencias/27_ordenamiento_sqlalchemy.png): ordenamiento por nombre.
-- [`28_put_sqlalchemy.png`](evidencias/28_put_sqlalchemy.png): actualización completa persistente.
-- [`29_patch_sqlalchemy.png`](evidencias/29_patch_sqlalchemy.png): actualización parcial persistente.
-- [`30_delete_sqlalchemy.png`](evidencias/30_delete_sqlalchemy.png): eliminación persistente `204`.
-- [`31_usuario_eliminado_404.png`](evidencias/31_usuario_eliminado_404.png): usuario eliminado ya no encontrado.
-- [`32_error_email_duplicado_sqlalchemy.png`](evidencias/32_error_email_duplicado_sqlalchemy.png): email duplicado `400`.
-- [`33_error_validacion_sqlalchemy.png`](evidencias/33_error_validacion_sqlalchemy.png): validación `422`.
-- [`34_error_patch_vacio_sqlalchemy.png`](evidencias/34_error_patch_vacio_sqlalchemy.png): PATCH vacío `400`.
-- [`35_error_put_inexistente_sqlalchemy.png`](evidencias/35_error_put_inexistente_sqlalchemy.png): PUT inexistente `404`.
-- [`36_error_delete_inexistente_sqlalchemy.png`](evidencias/36_error_delete_inexistente_sqlalchemy.png): DELETE inexistente `404`.
-- [`37_persistencia_entre_sesiones.png`](evidencias/37_persistencia_entre_sesiones.png): lectura desde un segundo proceso.
-- [`38_gitflow_ev09.png`](evidencias/38_gitflow_ev09.png): ramas y Pull Requests reales.
-- [`RESULTADOS_GUIA8.md`](evidencias/RESULTADOS_GUIA8.md)
-
-Las pruebas EV09 de endpoints, persistencia y errores fueron ejecutadas sobre la API SQLAlchemy actual y sus capturas están almacenadas en esta carpeta.
-
-El archivo SQLite se genera al ejecutar la API y está excluido de Git. Su estructura reproducible queda definida por el modelo SQLAlchemy y `Base.metadata.create_all()`.
-
-## Reflexion final
-
-La evolucion de `device_systems` paso de datos temporales en memoria a persistencia real con SQLite y SQLAlchemy. Separar el modelo ORM de los schemas Pydantic permite controlar la base de datos sin mezclarla con el contrato HTTP. Las constraints protegen la integridad, las sesiones permiten CRUD transaccional y Swagger, ReDoc y Git Flow hacen el proyecto verificable. El siguiente paso natural seria usar migraciones con Alembic y una base de datos de producción.
-
-## Git Flow aplicado
-
-La migración se desarrolla en ramas con commits trazables:
+Evidencia verificada:
 
 ```text
-main
-├── feature/sqlalchemy-persistence
-    ├── feat: configurar SQLite y modelo SQLAlchemy
-    ├── feat: migrar CRUD de usuarios a SQLAlchemy
-    └── docs: actualizar evidencias de persistencia
-└── feature/evidencias-ev09
-    └── docs: capturar pruebas reales de EV09
+<base> -> cff4dc36cc7a (head), create devices and loans tables
 ```
+
+## Modelos y relaciones
+
+### User
+
+- id
+- name
+- email
+- role
+- is_active
+- created_at
+- loans: relación con Loan
+
+### Device
+
+- id
+- name
+- serial_number
+- device_type
+- brand
+- is_available
+- created_at
+- loans: relación con Loan
+
+### Loan
+
+- id
+- user_id
+- device_id
+- loan_date
+- return_date
+- status
+
+Relaciones implementadas:
+
+- User -> Loan: one-to-many
+- Device -> Loan: one-to-many
+- Loan -> User y Device: many-to-one
+
+## Endpoints principales
+
+### Users
+
+- GET /users
+- GET /users/{user_id}
+- POST /users
+- PUT /users/{user_id}
+- PATCH /users/{user_id}
+- DELETE /users/{user_id}
+
+### Devices
+
+- GET /devices
+- GET /devices/{device_id}
+- POST /devices
+- PUT /devices/{device_id}
+- PATCH /devices/{device_id}
+- DELETE /devices/{device_id}
+
+### Loans
+
+- GET /loans
+- GET /loans/{loan_id}
+- POST /loans
+- PATCH /loans/{loan_id}/return
+- GET /users/{user_id}/loans
+- GET /devices/{device_id}/loans
+
+## Filtros y consultas avanzadas
+
+Se incluyeron filtros como:
+
+- GET /devices?device_type=laptop
+- GET /devices?is_available=true
+- GET /devices?brand=lenovo
+- GET /devices?search=thinkpad
+- GET /loans?status=active
+- GET /loans?user_email=aprendiz@sena.edu.co
+- GET /loans?device_type=laptop
+- GET /users/{user_id}/loans
+- GET /devices/{device_id}/loans
+
+Las consultas usan joins entre User, Device y Loan, con where, and_, or_ e ilike para búsquedas flexibles.
+
+## Reglas de negocio y manejo de errores
+
+- 201 Created cuando crea usuario, dispositivo o préstamo
+- 200 OK para consultas y devoluciones
+- 204 No Content para eliminaciones
+- 404 Not Found si no existe el recurso
+- 400 Bad Request para serial duplicado o correo duplicado
+- 409 Conflict para dispositivo no disponible o préstamo ya devuelto
+- 422 Unprocessable Entity para datos inválidos
+
+## Swagger / OpenAPI
+
+La API está documentada con etiquetas por recurso:
+
+- Users
+- Devices
+- Loans
+
+La documentación disponible en:
+
+- /docs
+- /redoc
+
+## Evidencia de pruebas realizadas
+
+Se realizaron pruebas reales con pytest usando FastAPI TestClient.
+
+Comando ejecutado:
 
 ```bash
-git switch main
-git pull origin main
-git switch -c feature/nombre-del-cambio
-git add .
-git commit -m "feat: describir el cambio"
-git push -u origin feature/nombre-del-cambio
+.\venv\Scripts\python.exe -m pytest -q
 ```
 
-## Licencia
+Resultado verificado:
 
-Proyecto academico para aprendizaje de FastAPI y SQLAlchemy.
+```text
+3 passed in 1.40s
+```
+
+Se ejecutaron además las migraciones:
+
+```bash
+.\venv\Scripts\alembic.exe revision --autogenerate -m "create devices and loans tables"
+.\venv\Scripts\alembic.exe upgrade head
+.\venv\Scripts\alembic.exe history
+```
+
+Resultado verificado:
+
+```text
+<base> -> cff4dc36cc7a (head), create devices and loans tables
+```
+
+También se verificó la disponibilidad de Swagger y algunos endpoints:
+
+```bash
+.\venv\Scripts\python.exe -c "from fastapi.testclient import TestClient; from app.main import app; client = TestClient(app); print(client.get('/docs').status_code); print(client.get('/loans?status=active').status_code); print(client.get('/users/1/loans').status_code)"
+```
+
+Resultado verificado:
+
+```text
+200
+200
+200
+```
+
+## Reflexión
+
+La aplicación evoluciona de un CRUD simple de usuarios a un sistema con relaciones reales entre modelos, integridad referencial, control de versiones con Alembic y consultas multidominio con joins. Esto es una base sólida para APIs REST profesionales y escalables.
