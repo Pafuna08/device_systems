@@ -59,3 +59,7 @@ Capturas visuales incorporadas:
 - La tabla `users` se crea en `device_systems.db` al iniciar.
 - La evidencia del esquema está en [`17_base_datos_sqlite.md`](17_base_datos_sqlite.md).
 - Los datos creados permanecen disponibles después de cerrar y volver a abrir la sesión, porque se almacenan en SQLite y no en un diccionario en memoria.
+
+## Evidencias EV09
+
+Las capturas `18`, `19` y `20` están almacenadas físicamente en esta carpeta y documentan estructura, SQLite y Swagger SQLAlchemy. Las pruebas `21` a `38` fueron ejecutadas sobre la API actual durante la validación, pero sus imágenes internas del navegador deben descargarse manualmente si se requieren como archivos del repositorio.
