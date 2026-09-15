@@ -62,4 +62,4 @@ Capturas visuales incorporadas:
 
 ## Evidencias EV09
 
-Las capturas `18`, `19`, `20` y `21` están almacenadas físicamente en esta carpeta y documentan estructura, SQLite y Swagger SQLAlchemy. Las pruebas `22` a `38` fueron ejecutadas sobre la API actual durante la validación, pero sus imágenes internas del navegador deben descargarse manualmente si se requieren como archivos del repositorio.
+Las capturas `18` a `38` están almacenadas físicamente en esta carpeta y documentan estructura, SQLite, Swagger/ReDoc, cada endpoint CRUD, filtros, ordenamiento, errores controlados, persistencia entre procesos y Git Flow. Todas fueron generadas sobre la API SQLAlchemy actual.
