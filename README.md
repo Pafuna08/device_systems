@@ -388,3 +388,88 @@ Estructura sugerida para la exposición oral del aprendiz frente al instructor:
 
 7. **¿Qué aprendió sobre modelado relacional en APIs REST? (30 s):**  
    _"Aprendí que la coherencia de datos debe asegurarse tanto en el motor de base de datos con claves foráneas como en la capa de servicios mediante validaciones de negocio (como verificar disponibilidad antes de prestar), y que las migraciones son imprescindibles para la entrega continua y el desarrollo en equipo."_
+
+---
+
+## Catálogo Histórico Integral de Evidencias (Desde la 1 hasta la Actual)
+
+Este repositorio representa la evolución incremental de una API profesional en tres fases consecutivas de formación SENA. Todas las evidencias generadas a lo largo del proceso se conservan en la carpeta [`evidencias/`](evidencias/):
+
+<details>
+<summary><strong>📁 Fase 1 (EV08): API REST Básica y CRUD de Usuarios en Memoria (Evidencias 1 a 16)</strong></summary>
+
+En esta primera etapa se construyeron los cimientos de la API: entorno virtual, configuración de FastAPI, schemas Pydantic, endpoints CRUD en memoria y documentación OpenAPI.
+
+| Evidencia | Descripción | Enlace |
+| :--- | :--- | :---: |
+| **1.png** | Creación y activación de entorno virtual en PowerShell. | [Ver](evidencias/1.png) |
+| **2.png** | Instalación de dependencias iniciales (`FastAPI`, `Uvicorn`). | [Ver](evidencias/2.png) |
+| **3.png** | Configuración del archivo `main.py` y servidor Uvicorn. | [Ver](evidencias/3.png) |
+| **4.0.png / 4.1.png** | Verificación de respuesta en endpoint raíz `/` y `/health`. | [Ver 4.0](evidencias/4.0.png) / [Ver 4.1](evidencias/4.1.png) |
+| **5.0.png / 5.1.png** | Estructura modular inicial y dependencias de proyecto. | [Ver 5.0](evidencias/5.0.png) / [Ver 5.1](evidencias/5.1.png) |
+| **6_swagger_crud.png** | Documentación Swagger UI con los endpoints CRUD de usuarios. | [Ver](evidencias/6_swagger_crud.png) |
+| **7_redoc_crud.png / 7.1** | Documentación alternativa en ReDoc. | [Ver 7](evidencias/7_redoc_crud.png) / [Ver 7.1](evidencias/7.1_redoc_crud.png) |
+| **8_post_exitoso.png** | Creación exitosa de usuario (`POST /users` - 201 Created). | [Ver](evidencias/8_post_exitoso.png) |
+| **9_put_exitoso.png** | Reemplazo completo de usuario (`PUT /users/{id}` - 200 OK). | [Ver](evidencias/9_put_exitoso.png) |
+| **10_patch_exitoso.png** | Actualización parcial (`PATCH /users/{id}` - 200 OK). | [Ver](evidencias/10_patch_exitoso.png) |
+| **11_delete_exitoso.png** | Eliminación física (`DELETE /users/{id}` - 204 No Content). | [Ver](evidencias/11_delete_exitoso.png) |
+| **12_error_correo_duplicado.png** | Validación de unicidad de correo (`400 Bad Request`). | [Ver](evidencias/12_error_correo_duplicado.png) |
+| **13_error_datos_invalidos.png** | Error de validación por esquema Pydantic (`422 Unprocessable Entity`). | [Ver](evidencias/13_error_datos_invalidos.png) |
+| **14_error_patch_vacio.png** | Validación de cuerpo vacío en PATCH (`400 Bad Request`). | [Ver](evidencias/14_error_patch_vacio.png) |
+| **15_error_put_inexistente.png** | Actualización de usuario no encontrado (`404 Not Found`). | [Ver](evidencias/15_error_put_inexistente.png) |
+| **16_error_delete_inexistente.png** | Eliminación de usuario no encontrado (`404 Not Found`). | [Ver](evidencias/16_error_delete_inexistente.png) |
+
+</details>
+
+<details>
+<summary><strong>📁 Fase 2 (EV09): Persistencia en Base de Datos con SQLAlchemy y SQLite (Evidencias 17 a 38)</strong></summary>
+
+En esta segunda etapa se reemplazó el almacenamiento en memoria por persistencia real en base de datos relacional SQLite utilizando SQLAlchemy 2.0 y separación en capas de servicio y dependencias.
+
+| Evidencia | Descripción | Enlace |
+| :--- | :--- | :---: |
+| **17_base_datos_sqlite.md** | Documentación de la conexión SQLite y esquema de tabla `users`. | [Ver](evidencias/17_base_datos_sqlite.md) |
+| **18_estructura_proyecto_ev09.png** | Estructura de directorios modular con carpetas `database/`, `models/`, `services/`. | [Ver](evidencias/18_estructura_proyecto_ev09.png) |
+| **19_base_datos_sqlite_ev09.png** | Inspección física del archivo `device_systems.db` y tabla `users`. | [Ver](evidencias/19_base_datos_sqlite_ev09.png) |
+| **20_swagger_sqlalchemy.png** | Swagger UI conectado a base de datos relacional. | [Ver](evidencias/20_swagger_sqlalchemy.png) |
+| **21_redoc_ev09.png** | Documentación ReDoc de la versión con persistencia. | [Ver](evidencias/21_redoc_ev09.png) |
+| **22_post_usuario_sqlalchemy.png** | Inserción en base de datos SQLite con ID autoincremental (201 Created). | [Ver](evidencias/22_post_usuario_sqlalchemy.png) |
+| **23_get_lista_sqlalchemy.png** | Consulta `SELECT` de todos los usuarios en base de datos. | [Ver](evidencias/23_get_lista_sqlalchemy.png) |
+| **24_get_usuario_id_sqlalchemy.png** | Consulta por ID primario con SQLAlchemy. | [Ver](evidencias/24_get_usuario_id_sqlalchemy.png) |
+| **25_filtro_rol_sqlalchemy.png** | Filtrado en base de datos por columna `role` (`admin`, `support`, `user`). | [Ver](evidencias/25_filtro_rol_sqlalchemy.png) |
+| **26_filtro_estado_sqlalchemy.png** | Filtrado en base de datos por columna booleana `is_active`. | [Ver](evidencias/26_filtro_estado_sqlalchemy.png) |
+| **27_ordenamiento_sqlalchemy.png** | Ordenamiento SQL por `created_at` o `name` (`asc`/`desc`). | [Ver](evidencias/27_ordenamiento_sqlalchemy.png) |
+| **28_put_sqlalchemy.png** | Actualización persistida mediante sesión de SQLAlchemy. | [Ver](evidencias/28_put_sqlalchemy.png) |
+| **29_patch_sqlalchemy.png** | Modificación parcial reflejada en disco. | [Ver](evidencias/29_patch_sqlalchemy.png) |
+| **30_delete_sqlalchemy.png** | Borrado físico `DELETE FROM users WHERE id = :id`. | [Ver](evidencias/30_delete_sqlalchemy.png) |
+| **31_usuario_eliminado_404.png** | Verificación de eliminación comprobando que retorna `404 Not Found`. | [Ver](evidencias/31_usuario_eliminado_404.png) |
+| **32_error_email_duplicado_sqlalchemy.png** | Captura de `IntegrityError` de SQLite ante correo duplicado (`400 Bad Request`). | [Ver](evidencias/32_error_email_duplicado_sqlalchemy.png) |
+| **33_error_validacion_sqlalchemy.png** | Validación de correo y campos con Pydantic v2. | [Ver](evidencias/33_error_validacion_sqlalchemy.png) |
+| **34_error_patch_vacio_sqlalchemy.png** | Control de excepciones para payloads vacíos. | [Ver](evidencias/34_error_patch_vacio_sqlalchemy.png) |
+| **35_error_put_inexistente_sqlalchemy.png** | Manejo de excepción cuando el registro no existe en SQLite. | [Ver](evidencias/35_error_put_inexistente_sqlalchemy.png) |
+| **36_error_delete_inexistente_sqlalchemy.png** | Manejo de eliminación fallida sobre registro inexistente. | [Ver](evidencias/36_error_delete_inexistente_sqlalchemy.png) |
+| **37_persistencia_entre_sesiones.png** | Prueba de persistencia cerrando y reabriendo el servidor Uvicorn sin pérdida de datos. | [Ver](evidencias/37_persistencia_entre_sesiones.png) |
+| **38_gitflow_ev09.png** | Evidencia del flujo de ramas en Git para la entrega EV09. | [Ver](evidencias/38_gitflow_ev09.png) |
+
+</details>
+
+<details open>
+<summary><strong>📁 Fase 3 (EV10 - Actual): Migraciones con Alembic, Asociaciones y Consultas con Joins (Evidencias EV10_01 a EV10_10)</strong></summary>
+
+Fase culminante donde se incorporan migraciones de esquema versionadas con Alembic, modelos de dispositivos y préstamos, integridad referencial y consultas relacionales complejas con joins y filtros.
+
+| Evidencia | Requisito de la Guía | Captura |
+| :--- | :--- | :---: |
+| **ev10_01_alembic_init.png** | Ejecución de `alembic init` y estructura creada. | [Ver](evidencias/ev10_01_alembic_init.png) |
+| **ev10_02_alembic_revision.png** | Creación de migración con `alembic revision --autogenerate`. | [Ver](evidencias/ev10_02_alembic_revision.png) |
+| **ev10_03_alembic_upgrade_history.png** | Aplicación con `alembic upgrade head` e historial `alembic history`. | [Ver](evidencias/ev10_03_alembic_upgrade_history.png) |
+| **ev10_04_estructura_tablas.png** | Estructura SQL de tablas en SQLite (`users`, `devices`, `loans`). | [Ver](evidencias/ev10_04_estructura_tablas.png) |
+| **ev10_05_swagger_general.png** | Swagger UI con tags `Users`, `Devices` y `Loans`, incluyendo `/loans/details`. | [Ver](evidencias/ev10_05_swagger_general.png) |
+| **ev10_06_post_creaciones.png** | Creación exitosa (201 Created) de usuario, dispositivo y préstamo. | [Ver](evidencias/ev10_06_post_creaciones.png) |
+| **ev10_07_error_dispositivo_no_disponible.png** | Validación de regla de negocio de disponibilidad (409 Conflict). | [Ver](evidencias/ev10_07_error_dispositivo_no_disponible.png) |
+| **ev10_08_loans_details_joins.png** | Consultas con Joins entre préstamos, usuarios y dispositivos (`GET /loans/details`). | [Ver](evidencias/ev10_08_loans_details_joins.png) |
+| **ev10_09_filtros_avanzados.png** | Filtrado por estado, tipo de equipo y disponibilidad. | [Ver](evidencias/ev10_09_filtros_avanzados.png) |
+| **ev10_10_devolucion_dispositivo.png** | Devolución de equipo (`PATCH return`) y confirmación de `is_available: true`. | [Ver](evidencias/ev10_10_devolucion_dispositivo.png) |
+
+</details>
+
