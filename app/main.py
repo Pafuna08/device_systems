@@ -7,8 +7,10 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy import select
 
 from app.database.connection import Base, SessionLocal, engine
+from app.models.device_model import Device
+from app.models.loan_model import Loan
 from app.models.user_model import User
-from app.routes import user_routes
+from app.routes import device_routes, loan_routes, user_routes
 
 
 def initialize_database() -> None:
@@ -36,6 +38,20 @@ def initialize_database() -> None:
                     role="user",
                     is_active=False,
                 ),
+                Device(
+                    name="Laptop Lenovo ThinkPad",
+                    serial_number="LEN-2024-001",
+                    device_type="laptop",
+                    brand="Lenovo",
+                    is_available=True,
+                ),
+                Device(
+                    name="Tablet Samsung Galaxy",
+                    serial_number="SAM-2024-010",
+                    device_type="tablet",
+                    brand="Samsung",
+                    is_available=True,
+                ),
             ]
         )
         db.commit()
@@ -46,15 +62,17 @@ initialize_database()
 # Crear aplicación FastAPI
 app = FastAPI(
     title="device_systems API",
-    description="API REST para la gestión de usuarios en el sistema device_systems",
-    version="2.0.0",
+    description="API REST para la gestión de usuarios, dispositivos y préstamos con FastAPI, SQLAlchemy y Alembic.",
+    version="3.0.0",
     contact={"name": "Pafuna08", "url": "https://github.com/Pafuna08/device_systems"},
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
 )
 
-# Incluir rutas de usuarios
+# Incluir rutas de usuarios, dispositivos y préstamos
 app.include_router(user_routes.router)
+app.include_router(device_routes.router)
+app.include_router(loan_routes.router)
 
 
 @app.get(
