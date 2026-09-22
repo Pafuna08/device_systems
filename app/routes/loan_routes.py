@@ -73,6 +73,33 @@ async def get_all_loans(
 
 
 @router.get(
+    "/loans/details",
+    response_model=list[LoanDetailResponse],
+    summary="Consultar detalles de préstamos",
+    description="Consulta detallada de préstamos con información combinada de usuario y dispositivo mediante joins y filtros.",
+    response_description="Lista detallada de préstamos",
+)
+async def get_loans_details(
+    db: Session = Depends(get_db),
+    status: str | None = Query(None, description="Filtrar por estado del préstamo"),
+    user_email: str | None = Query(None, description="Buscar por email del usuario"),
+    device_type: str | None = Query(None, description="Filtrar por tipo de dispositivo"),
+    user_id: int | None = Query(None, description="Filtrar por usuario"),
+    device_id: int | None = Query(None, description="Filtrar por dispositivo"),
+    search: str | None = Query(None, description="Búsqueda libre"),
+):
+    return await get_all_loans(
+        db=db,
+        status=status,
+        user_email=user_email,
+        device_type=device_type,
+        user_id=user_id,
+        device_id=device_id,
+        search=search,
+    )
+
+
+@router.get(
     "/loans/{loan_id}",
     response_model=LoanDetailResponse,
     summary="Consultar préstamo",
