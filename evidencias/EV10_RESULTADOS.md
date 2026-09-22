@@ -3,7 +3,7 @@
 **Actividad:** GA1-220501096-01-AA1-EV10  
 **Proyecto:** `device_systems`  
 **Tecnologías:** FastAPI, SQLAlchemy 2, Alembic, SQLite, Pydantic v2, Pytest  
-**Fecha de Verificación:** 22 de septiembre de 2026  
+**Fecha de Verificación:** 22 de septiembre de 2026
 
 ---
 
@@ -30,20 +30,20 @@ Path: alembic\versions\cff4dc36cc7a_create_devices_and_loans_tables.py
 
 Las siguientes operaciones se verificaron contra la API en vivo y mediante `FastAPI TestClient`:
 
-| Operación / Endpoint | Estado HTTP | Resultado Verificado |
-| :--- | :---: | :--- |
-| `POST /users` | **201 Created** | Usuario creado con ID asignado y correo validado. |
-| `POST /devices` | **201 Created** | Dispositivo registrado con serial único y disponibilidad en `True`. |
-| `POST /loans` | **201 Created** | Préstamo registrado; dispositivo pasa automáticamente a `is_available: false`. |
-| `POST /loans` (equipo ocupado) | **409 Conflict** | Bloqueo exitoso con mensaje: *"El dispositivo no está disponible para préstamo"*. |
-| `GET /loans/details` | **200 OK** | Consulta con Joins entre `loans`, `users` y `devices` con datos anidados completos. |
-| `GET /loans/details?status=active&device_type=laptop` | **200 OK** | Filtro combinado por estado y tipo de equipo. |
-| `GET /users/{user_id}/loans` | **200 OK** | Historial de préstamos asociados a un usuario específico. |
-| `GET /devices/{device_id}/loans` | **200 OK** | Historial de préstamos asociados a un dispositivo. |
-| `PATCH /loans/{loan_id}/return` | **200 OK** | Estado cambia a `returned`, asigna `return_date` y libera el equipo (`is_available: true`). |
-| `PATCH /loans/{loan_id}/return` (repetido) | **409 Conflict** | Error de regla de negocio: *"El préstamo ya fue devuelto"*. |
-| `GET /devices/{device_id}` | **200 OK** | Confirmación de `is_available: true` tras la devolución. |
-| `GET /loans?status=invalid` | **422 Unprocessable Entity** | Validación estricta por esquema literal (`active`, `returned`, `overdue`). |
+| Operación / Endpoint                                  |         Estado HTTP          | Resultado Verificado                                                                        |
+| :---------------------------------------------------- | :--------------------------: | :------------------------------------------------------------------------------------------ |
+| `POST /users`                                         |       **201 Created**        | Usuario creado con ID asignado y correo validado.                                           |
+| `POST /devices`                                       |       **201 Created**        | Dispositivo registrado con serial único y disponibilidad en `True`.                         |
+| `POST /loans`                                         |       **201 Created**        | Préstamo registrado; dispositivo pasa automáticamente a `is_available: false`.              |
+| `POST /loans` (equipo ocupado)                        |       **409 Conflict**       | Bloqueo exitoso con mensaje: _"El dispositivo no está disponible para préstamo"_.           |
+| `GET /loans/details`                                  |          **200 OK**          | Consulta con Joins entre `loans`, `users` y `devices` con datos anidados completos.         |
+| `GET /loans/details?status=active&device_type=laptop` |          **200 OK**          | Filtro combinado por estado y tipo de equipo.                                               |
+| `GET /users/{user_id}/loans`                          |          **200 OK**          | Historial de préstamos asociados a un usuario específico.                                   |
+| `GET /devices/{device_id}/loans`                      |          **200 OK**          | Historial de préstamos asociados a un dispositivo.                                          |
+| `PATCH /loans/{loan_id}/return`                       |          **200 OK**          | Estado cambia a `returned`, asigna `return_date` y libera el equipo (`is_available: true`). |
+| `PATCH /loans/{loan_id}/return` (repetido)            |       **409 Conflict**       | Error de regla de negocio: _"El préstamo ya fue devuelto"_.                                 |
+| `GET /devices/{device_id}`                            |          **200 OK**          | Confirmación de `is_available: true` tras la devolución.                                    |
+| `GET /loans?status=invalid`                           | **422 Unprocessable Entity** | Validación estricta por esquema literal (`active`, `returned`, `overdue`).                  |
 
 ---
 
