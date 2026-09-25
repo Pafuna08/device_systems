@@ -1,75 +1,77 @@
 """
-Aplicación principal de FastAPI - device_systems
-API REST para la gestión de usuarios del sistema
+Aplicacion principal de FastAPI - device_systems (v3.0.0 - EV11 Seguridad)
+API REST para la gestion de usuarios, dispositivos y prestamos, protegida con
+OAuth2 + JWT, middleware personalizado, CORS y rate limiting.
 """
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
-from sqlalchemy import select
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
-from app.database.connection import Base, SessionLocal, engine
-from app.models.device_model import Device
-from app.models.loan_model import Loan
-from app.models.user_model import User
+from app.auth import auth_routes
+from app.middlewares.rate_limiter import limiter
+from app.middlewares.request_middleware import RequestTracingMiddleware
+
+# Se importan los modelos para que Base.metadata conozca todas las tablas
+# antes de ejecutar create_all() dentro de initialize_database().
+from app.models.device_model import Device  # noqa: F401
+from app.models.loan_model import Loan  # noqa: F401
+from app.models.user_model import User  # noqa: F401
 from app.routes import device_routes, loan_routes, user_routes
-
-
-def initialize_database() -> None:
-    Base.metadata.create_all(bind=engine)
-    with SessionLocal() as db:
-        if db.scalar(select(User.id).limit(1)) is not None:
-            return
-        db.add_all(
-            [
-                User(
-                    name="Admin Usuario",
-                    email="admin@device-systems.com",
-                    role="admin",
-                    is_active=True,
-                ),
-                User(
-                    name="Support Usuario",
-                    email="support@device-systems.com",
-                    role="support",
-                    is_active=True,
-                ),
-                User(
-                    name="Usuario Normal",
-                    email="user@device-systems.com",
-                    role="user",
-                    is_active=False,
-                ),
-                Device(
-                    name="Laptop Lenovo ThinkPad",
-                    serial_number="LEN-2024-001",
-                    device_type="laptop",
-                    brand="Lenovo",
-                    is_available=True,
-                ),
-                Device(
-                    name="Tablet Samsung Galaxy",
-                    serial_number="SAM-2024-010",
-                    device_type="tablet",
-                    brand="Samsung",
-                    is_available=True,
-                ),
-            ]
-        )
-        db.commit()
-
+from app.seed import initialize_database
 
 initialize_database()
 
-# Crear aplicación FastAPI
+# Crear aplicacion FastAPI
 app = FastAPI(
     title="device_systems API",
-    description="API REST para la gestión de usuarios, dispositivos y préstamos con FastAPI, SQLAlchemy y Alembic.",
+    description=(
+        "API REST segura para la gestion de usuarios, dispositivos y prestamos, "
+        "con autenticacion OAuth2 + JWT, control de roles, middleware de "
+        "trazabilidad, CORS y rate limiting."
+    ),
     version="3.0.0",
     contact={"name": "Pafuna08", "url": "https://github.com/Pafuna08/device_systems"},
     docs_url="/docs",
     redoc_url="/redoc",
+    openapi_tags=[
+        {"name": "Auth", "description": "Registro, login (OAuth2 + JWT) y perfil del usuario autenticado."},
+        {"name": "Users", "description": "Gestion de usuarios. Requiere autenticacion; escritura requiere rol admin."},
+        {"name": "Devices", "description": "Gestion de dispositivos. Escritura requiere rol admin o support."},
+        {"name": "Loans", "description": "Gestion de prestamos. Requiere autenticacion; algunas rutas requieren rol admin/support."},
+        {"name": "Security", "description": "Endpoints de estado y salud de la API."},
+    ],
 )
 
-# Incluir rutas de usuarios, dispositivos y préstamos
+# --- Fase 11: Rate limiting (slowapi) -------------------------------------
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# --- Fase 9: CORS -----------------------------------------------------------
+# En desarrollo se permiten explicitamente los origenes del frontend local.
+# En produccion NUNCA se debe usar allow_origins=["*"] junto con
+# allow_credentials=True: el estandar CORS prohibe combinar comodin de origen
+# con credenciales (cookies/Authorization), y hacerlo expondria la API a
+# peticiones autenticadas desde cualquier sitio malicioso. Se debe listar
+# explicitamente cada dominio autorizado del frontend en produccion.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- Fase 10: Middleware personalizado de trazabilidad -----------------------
+app.add_middleware(RequestTracingMiddleware)
+
+# Incluir rutas
+app.include_router(auth_routes.router)
 app.include_router(user_routes.router)
 app.include_router(device_routes.router)
 app.include_router(loan_routes.router)
@@ -78,12 +80,13 @@ app.include_router(loan_routes.router)
 @app.get(
     "/",
     response_class=HTMLResponse,
-    summary="Página principal",
-    description="Página de bienvenida a la API"
+    summary="Pagina principal",
+    description="Pagina de bienvenida a la API",
+    tags=["Security"],
 )
 async def root():
     """
-    Página principal de bienvenida a la API device_systems
+    Pagina principal de bienvenida a la API device_systems
     """
     return """
     <html>
@@ -103,7 +106,7 @@ async def root():
                 }
                 h1 { color: #333; }
                 p { color: #666; }
-                .link { 
+                .link {
                     display: inline-block;
                     margin: 10px 10px 10px 0;
                     padding: 10px 15px;
@@ -113,7 +116,7 @@ async def root():
                     border-radius: 4px;
                 }
                 .link:hover { background-color: #0056b3; }
-                .info { 
+                .info {
                     background-color: #e7f3ff;
                     padding: 15px;
                     border-left: 4px solid #007bff;
@@ -124,36 +127,30 @@ async def root():
         </head>
         <body>
             <div class="container">
-                <h1>🎉 Bienvenido a device_systems API</h1>
-                <p>Esta es la API REST para la gestión de usuarios del sistema device_systems.</p>
-                
+                <h1>Bienvenido a device_systems API (v3.0.0 - Seguridad)</h1>
+                <p>API REST protegida con OAuth2 + JWT para la gestion de usuarios, dispositivos y prestamos.</p>
+
                 <div class="info">
-                    <h3>📚 Documentación Interactiva</h3>
-                    <p>Accede a la documentación y prueba los endpoints:</p>
+                    <h3>Documentacion Interactiva</h3>
                     <a href="/docs" class="link">Swagger UI</a>
                     <a href="/redoc" class="link">ReDoc</a>
                 </div>
-                
+
                 <div class="info">
-                    <h3>🔌 Endpoints Disponibles</h3>
+                    <h3>Autenticacion</h3>
                     <ul>
-                        <li><strong>GET /users</strong> - Obtener todos los usuarios</li>
-                        <li><strong>GET /users/{user_id}</strong> - Obtener usuario por ID</li>
-                        <li><strong>POST /users</strong> - Crear nuevo usuario</li>
-                        <li><strong>PUT /users/{user_id}</strong> - Reemplazar usuario</li>
-                        <li><strong>PATCH /users/{user_id}</strong> - Actualizar parcialmente</li>
-                        <li><strong>DELETE /users/{user_id}</strong> - Eliminar usuario</li>
-                        <li><strong>GET /users?role=admin</strong> - Filtrar por rol</li>
-                        <li><strong>GET /users?is_active=true</strong> - Filtrar por estado</li>
+                        <li><strong>POST /auth/register</strong> - Registrar usuario</li>
+                        <li><strong>POST /auth/login</strong> - Iniciar sesion (retorna JWT)</li>
+                        <li><strong>GET /auth/me</strong> - Perfil del usuario autenticado</li>
                     </ul>
                 </div>
-                
+
                 <div class="info">
-                    <h3>📦 Cabeceras HTTP Personalizadas</h3>
-                    <p>Todas las respuestas incluyen:</p>
+                    <h3>Cabeceras HTTP Personalizadas</h3>
                     <ul>
                         <li><strong>X-App-Name</strong>: device_systems</li>
-                        <li><strong>X-API-Version</strong>: 2.0</li>
+                        <li><strong>X-Process-Time</strong>: tiempo de respuesta</li>
+                        <li><strong>X-Request-ID</strong>: identificador de la peticion</li>
                     </ul>
                 </div>
             </div>
@@ -162,28 +159,21 @@ async def root():
     """
 
 
-@app.get("/health", summary="Health Check", description="Verifica que la API esté funcionando")
+@app.get(
+    "/health",
+    summary="Health Check",
+    description="Verifica que la API este funcionando",
+    tags=["Security"],
+)
 async def health_check():
     """
-    Endpoint para verificar que la API está en línea
+    Endpoint para verificar que la API esta en linea
     """
     return {
         "status": "healthy",
         "service": "device_systems",
-        "version": "2.0.0"
+        "version": "3.0.0",
     }
-
-
-# Middleware para agregar cabeceras personalizadas
-@app.middleware("http")
-async def add_custom_headers(request, call_next):
-    """
-    Middleware que agrega cabeceras HTTP personalizadas a todas las respuestas
-    """
-    response = await call_next(request)
-    response.headers["X-App-Name"] = "device_systems"
-    response.headers["X-API-Version"] = "2.0"
-    return response
 
 
 # Manejador de excepciones global
@@ -201,7 +191,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        app,
+        "app.main:app",
         host="127.0.0.1",
         port=8000,
         reload=True

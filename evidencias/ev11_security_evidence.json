@@ -1,0 +1,158 @@
+{
+  "register": {
+    "status": 201,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "content-length": "143",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.4285",
+      "x-request-id": "3cc3b86d",
+      "connection": "close"
+    },
+    "body": "{\"name\":\"Eva Evidencia\",\"email\":\"ev11_1790205405@example.com\",\"role\":\"user\",\"is_active\":true,\"id\":19,\"created_at\":\"2026-09-23T23:16:46.406473\"}"
+  },
+  "login": {
+    "status": 200,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "content-length": "213",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.3838",
+      "x-request-id": "31032e1b",
+      "connection": "close"
+    },
+    "body": "{\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJldjExXzE3OTAyMDU0MDVAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTc5MDIwNzIwNn0.gOXMWVUktout0YMG_qy19C7cAvXPkkSLlpPPBesjuGY\",\"token_type\":\"bearer\"}"
+  },
+  "me": {
+    "status": 200,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "content-length": "143",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0032",
+      "x-request-id": "4154605b",
+      "connection": "close"
+    },
+    "body": "{\"name\":\"Eva Evidencia\",\"email\":\"ev11_1790205405@example.com\",\"role\":\"user\",\"is_active\":true,\"id\":19,\"created_at\":\"2026-09-23T23:16:46.406473\"}"
+  },
+  "unauth": {
+    "status": 401,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "www-authenticate": "Bearer",
+      "content-length": "30",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0015",
+      "x-request-id": "b95484c7",
+      "connection": "close"
+    },
+    "body": "{\"detail\":\"Not authenticated\"}"
+  },
+  "invalid": {
+    "status": 401,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "www-authenticate": "Bearer",
+      "content-length": "48",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0023",
+      "x-request-id": "98416025",
+      "connection": "close"
+    },
+    "body": "{\"detail\":\"No se pudo validar las credenciales\"}"
+  },
+  "forbidden": {
+    "status": 403,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "content-length": "56",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0041",
+      "x-request-id": "3a9910b9",
+      "connection": "close"
+    },
+    "body": "{\"detail\":\"Esta operacion requiere rol admin o support\"}"
+  },
+  "cors_options": {
+    "status": 200,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "vary": "Origin",
+      "access-control-allow-methods": "DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT",
+      "access-control-max-age": "600",
+      "access-control-allow-credentials": "true",
+      "access-control-allow-origin": "http://localhost:5173",
+      "content-length": "2",
+      "content-type": "text/plain; charset=utf-8",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0002",
+      "x-request-id": "b9f12f14",
+      "connection": "close"
+    },
+    "body": "OK"
+  },
+  "health": {
+    "status": 200,
+    "headers": {
+      "date": "Wed, 23 Sep 2026 23:16:45 GMT",
+      "server": "uvicorn",
+      "content-length": "65",
+      "content-type": "application/json",
+      "x-app-name": "device_systems",
+      "x-process-time": "0.0006",
+      "x-request-id": "21e532ad",
+      "connection": "close"
+    },
+    "body": "{\"status\":\"healthy\",\"service\":\"device_systems\",\"version\":\"3.0.0\"}"
+  },
+  "rate_limit": [
+    {
+      "iter": 1,
+      "status": 401,
+      "body": "{\"detail\":\"Email o contrasena incorrectos\"}"
+    },
+    {
+      "iter": 2,
+      "status": 401,
+      "body": "{\"detail\":\"Email o contrasena incorrectos\"}"
+    },
+    {
+      "iter": 3,
+      "status": 401,
+      "body": "{\"detail\":\"Email o contrasena incorrectos\"}"
+    },
+    {
+      "iter": 4,
+      "status": 429,
+      "body": "{\"error\":\"Rate limit exceeded: 5 per 1 minute\"}"
+    },
+    {
+      "iter": 5,
+      "status": 429,
+      "body": "{\"error\":\"Rate limit exceeded: 5 per 1 minute\"}"
+    },
+    {
+      "iter": 6,
+      "status": 429,
+      "body": "{\"error\":\"Rate limit exceeded: 5 per 1 minute\"}"
+    },
+    {
+      "iter": 7,
+      "status": 429,
+      "body": "{\"error\":\"Rate limit exceeded: 5 per 1 minute\"}"
+    }
+  ]
+}

@@ -3,8 +3,10 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
+from app.dependencies.auth_dependency import require_admin, require_admin_or_support
 from app.dependencies.database_dependency import get_db
 from app.models.device_model import Device
+from app.models.user_model import User
 from app.schemas.device_schema import DeviceCreate, DevicePatch, DeviceResponse, DeviceUpdate
 from app.services.device_service import (
     create_device,
@@ -60,10 +62,14 @@ async def get_device(device_id: int, db: Session = Depends(get_db)):
     response_model=DeviceResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Crear dispositivo",
-    description="Registra un nuevo dispositivo disponible para préstamo.",
+    description="Registra un nuevo dispositivo disponible para préstamo. Requiere rol admin o support.",
     response_description="Dispositivo creado",
 )
-async def create_new_device(device_data: DeviceCreate, db: Session = Depends(get_db)):
+async def create_new_device(
+    device_data: DeviceCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_support),
+):
     if get_device_by_serial_number(db, device_data.serial_number):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -76,13 +82,14 @@ async def create_new_device(device_data: DeviceCreate, db: Session = Depends(get
     "/{device_id}",
     response_model=DeviceResponse,
     summary="Reemplazar dispositivo",
-    description="Sobrescribe la información completa de un dispositivo.",
+    description="Sobrescribe la información completa de un dispositivo. Requiere rol admin o support.",
     response_description="Dispositivo actualizado",
 )
 async def replace_existing_device(
     device_id: int,
     device_data: DeviceUpdate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_support),
 ):
     device = get_device_by_id(db, device_id)
     if device is None:
@@ -98,13 +105,14 @@ async def replace_existing_device(
     "/{device_id}",
     response_model=DeviceResponse,
     summary="Actualizar dispositivo parcialmente",
-    description="Actualiza solo los campos enviados por el cliente.",
+    description="Actualiza solo los campos enviados por el cliente. Requiere rol admin o support.",
     response_description="Dispositivo actualizado parcialmente",
 )
 async def patch_existing_device(
     device_id: int,
     device_data: DevicePatch,
     db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_support),
 ):
     device = get_device_by_id(db, device_id)
     if device is None:
@@ -123,10 +131,14 @@ async def patch_existing_device(
     "/{device_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Eliminar dispositivo",
-    description="Elimina físicamente un dispositivo de la base de datos.",
+    description="Elimina físicamente un dispositivo de la base de datos. Requiere rol admin.",
     response_description="Dispositivo eliminado",
 )
-async def delete_existing_device(device_id: int, db: Session = Depends(get_db)):
+async def delete_existing_device(
+    device_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin),
+):
     device = get_device_by_id(db, device_id)
     if device is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Dispositivo no encontrado")

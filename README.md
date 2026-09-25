@@ -384,7 +384,7 @@ Estructura sugerida para la exposición oral del aprendiz frente al instructor:
    _"En `loan_service.py` construimos la consulta con `select(Loan).join(User).join(Device)`. Esto combina las tres tablas en una sola instrucción SQL, permitiendo que la API responda en el endpoint `/loans/details` con un esquema Pydantic que anida la información del usuario y del dispositivo."_
 
 6. **¿Cómo se aplicaron los filtros avanzados? (30 s):**  
-   _"A través de parámetros de consulta opcionales (`Query`), construyendo filtros dinámicos con `where()`, `and_()`, `or_()` y operadores como `ilike()` para búsquedas insensibles a mayúsculas y minúsculas por estado, correo o tipo de dispositivo."_
+   _"A través de parámetros de consulta opcionales (`Query`), construyendo filtros dinámicos con `where()`, `and_()`, `or*()`y operadores como`ilike()` para búsquedas insensibles a mayúsculas y minúsculas por estado, correo o tipo de dispositivo."*
 
 7. **¿Qué aprendió sobre modelado relacional en APIs REST? (30 s):**  
    _"Aprendí que la coherencia de datos debe asegurarse tanto en el motor de base de datos con claves foráneas como en la capa de servicios mediante validaciones de negocio (como verificar disponibilidad antes de prestar), y que las migraciones son imprescindibles para la entrega continua y el desarrollo en equipo."_
@@ -400,24 +400,24 @@ Este repositorio representa la evolución incremental de una API profesional en 
 
 En esta primera etapa se construyeron los cimientos de la API: entorno virtual, configuración de FastAPI, schemas Pydantic, endpoints CRUD en memoria y documentación OpenAPI.
 
-| Evidencia | Descripción | Enlace |
-| :--- | :--- | :---: |
-| **1.png** | Creación y activación de entorno virtual en PowerShell. | [Ver](evidencias/1.png) |
-| **2.png** | Instalación de dependencias iniciales (`FastAPI`, `Uvicorn`). | [Ver](evidencias/2.png) |
-| **3.png** | Configuración del archivo `main.py` y servidor Uvicorn. | [Ver](evidencias/3.png) |
-| **4.0.png / 4.1.png** | Verificación de respuesta en endpoint raíz `/` y `/health`. | [Ver 4.0](evidencias/4.0.png) / [Ver 4.1](evidencias/4.1.png) |
-| **5.0.png / 5.1.png** | Estructura modular inicial y dependencias de proyecto. | [Ver 5.0](evidencias/5.0.png) / [Ver 5.1](evidencias/5.1.png) |
-| **6_swagger_crud.png** | Documentación Swagger UI con los endpoints CRUD de usuarios. | [Ver](evidencias/6_swagger_crud.png) |
-| **7_redoc_crud.png / 7.1** | Documentación alternativa en ReDoc. | [Ver 7](evidencias/7_redoc_crud.png) / [Ver 7.1](evidencias/7.1_redoc_crud.png) |
-| **8_post_exitoso.png** | Creación exitosa de usuario (`POST /users` - 201 Created). | [Ver](evidencias/8_post_exitoso.png) |
-| **9_put_exitoso.png** | Reemplazo completo de usuario (`PUT /users/{id}` - 200 OK). | [Ver](evidencias/9_put_exitoso.png) |
-| **10_patch_exitoso.png** | Actualización parcial (`PATCH /users/{id}` - 200 OK). | [Ver](evidencias/10_patch_exitoso.png) |
-| **11_delete_exitoso.png** | Eliminación física (`DELETE /users/{id}` - 204 No Content). | [Ver](evidencias/11_delete_exitoso.png) |
-| **12_error_correo_duplicado.png** | Validación de unicidad de correo (`400 Bad Request`). | [Ver](evidencias/12_error_correo_duplicado.png) |
-| **13_error_datos_invalidos.png** | Error de validación por esquema Pydantic (`422 Unprocessable Entity`). | [Ver](evidencias/13_error_datos_invalidos.png) |
-| **14_error_patch_vacio.png** | Validación de cuerpo vacío en PATCH (`400 Bad Request`). | [Ver](evidencias/14_error_patch_vacio.png) |
-| **15_error_put_inexistente.png** | Actualización de usuario no encontrado (`404 Not Found`). | [Ver](evidencias/15_error_put_inexistente.png) |
-| **16_error_delete_inexistente.png** | Eliminación de usuario no encontrado (`404 Not Found`). | [Ver](evidencias/16_error_delete_inexistente.png) |
+| Evidencia                           | Descripción                                                            |                                     Enlace                                      |
+| :---------------------------------- | :--------------------------------------------------------------------- | :-----------------------------------------------------------------------------: |
+| **1.png**                           | Creación y activación de entorno virtual en PowerShell.                |                             [Ver](evidencias/1.png)                             |
+| **2.png**                           | Instalación de dependencias iniciales (`FastAPI`, `Uvicorn`).          |                             [Ver](evidencias/2.png)                             |
+| **3.png**                           | Configuración del archivo `main.py` y servidor Uvicorn.                |                             [Ver](evidencias/3.png)                             |
+| **4.0.png / 4.1.png**               | Verificación de respuesta en endpoint raíz `/` y `/health`.            |          [Ver 4.0](evidencias/4.0.png) / [Ver 4.1](evidencias/4.1.png)          |
+| **5.0.png / 5.1.png**               | Estructura modular inicial y dependencias de proyecto.                 |          [Ver 5.0](evidencias/5.0.png) / [Ver 5.1](evidencias/5.1.png)          |
+| **6_swagger_crud.png**              | Documentación Swagger UI con los endpoints CRUD de usuarios.           |                      [Ver](evidencias/6_swagger_crud.png)                       |
+| **7_redoc_crud.png / 7.1**          | Documentación alternativa en ReDoc.                                    | [Ver 7](evidencias/7_redoc_crud.png) / [Ver 7.1](evidencias/7.1_redoc_crud.png) |
+| **8_post_exitoso.png**              | Creación exitosa de usuario (`POST /users` - 201 Created).             |                      [Ver](evidencias/8_post_exitoso.png)                       |
+| **9_put_exitoso.png**               | Reemplazo completo de usuario (`PUT /users/{id}` - 200 OK).            |                       [Ver](evidencias/9_put_exitoso.png)                       |
+| **10_patch_exitoso.png**            | Actualización parcial (`PATCH /users/{id}` - 200 OK).                  |                     [Ver](evidencias/10_patch_exitoso.png)                      |
+| **11_delete_exitoso.png**           | Eliminación física (`DELETE /users/{id}` - 204 No Content).            |                     [Ver](evidencias/11_delete_exitoso.png)                     |
+| **12_error_correo_duplicado.png**   | Validación de unicidad de correo (`400 Bad Request`).                  |                 [Ver](evidencias/12_error_correo_duplicado.png)                 |
+| **13_error_datos_invalidos.png**    | Error de validación por esquema Pydantic (`422 Unprocessable Entity`). |                 [Ver](evidencias/13_error_datos_invalidos.png)                  |
+| **14_error_patch_vacio.png**        | Validación de cuerpo vacío en PATCH (`400 Bad Request`).               |                   [Ver](evidencias/14_error_patch_vacio.png)                    |
+| **15_error_put_inexistente.png**    | Actualización de usuario no encontrado (`404 Not Found`).              |                 [Ver](evidencias/15_error_put_inexistente.png)                  |
+| **16_error_delete_inexistente.png** | Eliminación de usuario no encontrado (`404 Not Found`).                |                [Ver](evidencias/16_error_delete_inexistente.png)                |
 
 </details>
 
@@ -426,30 +426,30 @@ En esta primera etapa se construyeron los cimientos de la API: entorno virtual, 
 
 En esta segunda etapa se reemplazó el almacenamiento en memoria por persistencia real en base de datos relacional SQLite utilizando SQLAlchemy 2.0 y separación en capas de servicio y dependencias.
 
-| Evidencia | Descripción | Enlace |
-| :--- | :--- | :---: |
-| **17_base_datos_sqlite.md** | Documentación de la conexión SQLite y esquema de tabla `users`. | [Ver](evidencias/17_base_datos_sqlite.md) |
-| **18_estructura_proyecto_ev09.png** | Estructura de directorios modular con carpetas `database/`, `models/`, `services/`. | [Ver](evidencias/18_estructura_proyecto_ev09.png) |
-| **19_base_datos_sqlite_ev09.png** | Inspección física del archivo `device_systems.db` y tabla `users`. | [Ver](evidencias/19_base_datos_sqlite_ev09.png) |
-| **20_swagger_sqlalchemy.png** | Swagger UI conectado a base de datos relacional. | [Ver](evidencias/20_swagger_sqlalchemy.png) |
-| **21_redoc_ev09.png** | Documentación ReDoc de la versión con persistencia. | [Ver](evidencias/21_redoc_ev09.png) |
-| **22_post_usuario_sqlalchemy.png** | Inserción en base de datos SQLite con ID autoincremental (201 Created). | [Ver](evidencias/22_post_usuario_sqlalchemy.png) |
-| **23_get_lista_sqlalchemy.png** | Consulta `SELECT` de todos los usuarios en base de datos. | [Ver](evidencias/23_get_lista_sqlalchemy.png) |
-| **24_get_usuario_id_sqlalchemy.png** | Consulta por ID primario con SQLAlchemy. | [Ver](evidencias/24_get_usuario_id_sqlalchemy.png) |
-| **25_filtro_rol_sqlalchemy.png** | Filtrado en base de datos por columna `role` (`admin`, `support`, `user`). | [Ver](evidencias/25_filtro_rol_sqlalchemy.png) |
-| **26_filtro_estado_sqlalchemy.png** | Filtrado en base de datos por columna booleana `is_active`. | [Ver](evidencias/26_filtro_estado_sqlalchemy.png) |
-| **27_ordenamiento_sqlalchemy.png** | Ordenamiento SQL por `created_at` o `name` (`asc`/`desc`). | [Ver](evidencias/27_ordenamiento_sqlalchemy.png) |
-| **28_put_sqlalchemy.png** | Actualización persistida mediante sesión de SQLAlchemy. | [Ver](evidencias/28_put_sqlalchemy.png) |
-| **29_patch_sqlalchemy.png** | Modificación parcial reflejada en disco. | [Ver](evidencias/29_patch_sqlalchemy.png) |
-| **30_delete_sqlalchemy.png** | Borrado físico `DELETE FROM users WHERE id = :id`. | [Ver](evidencias/30_delete_sqlalchemy.png) |
-| **31_usuario_eliminado_404.png** | Verificación de eliminación comprobando que retorna `404 Not Found`. | [Ver](evidencias/31_usuario_eliminado_404.png) |
-| **32_error_email_duplicado_sqlalchemy.png** | Captura de `IntegrityError` de SQLite ante correo duplicado (`400 Bad Request`). | [Ver](evidencias/32_error_email_duplicado_sqlalchemy.png) |
-| **33_error_validacion_sqlalchemy.png** | Validación de correo y campos con Pydantic v2. | [Ver](evidencias/33_error_validacion_sqlalchemy.png) |
-| **34_error_patch_vacio_sqlalchemy.png** | Control de excepciones para payloads vacíos. | [Ver](evidencias/34_error_patch_vacio_sqlalchemy.png) |
-| **35_error_put_inexistente_sqlalchemy.png** | Manejo de excepción cuando el registro no existe en SQLite. | [Ver](evidencias/35_error_put_inexistente_sqlalchemy.png) |
-| **36_error_delete_inexistente_sqlalchemy.png** | Manejo de eliminación fallida sobre registro inexistente. | [Ver](evidencias/36_error_delete_inexistente_sqlalchemy.png) |
-| **37_persistencia_entre_sesiones.png** | Prueba de persistencia cerrando y reabriendo el servidor Uvicorn sin pérdida de datos. | [Ver](evidencias/37_persistencia_entre_sesiones.png) |
-| **38_gitflow_ev09.png** | Evidencia del flujo de ramas en Git para la entrega EV09. | [Ver](evidencias/38_gitflow_ev09.png) |
+| Evidencia                                      | Descripción                                                                            |                            Enlace                            |
+| :--------------------------------------------- | :------------------------------------------------------------------------------------- | :----------------------------------------------------------: |
+| **17_base_datos_sqlite.md**                    | Documentación de la conexión SQLite y esquema de tabla `users`.                        |          [Ver](evidencias/17_base_datos_sqlite.md)           |
+| **18_estructura_proyecto_ev09.png**            | Estructura de directorios modular con carpetas `database/`, `models/`, `services/`.    |      [Ver](evidencias/18_estructura_proyecto_ev09.png)       |
+| **19_base_datos_sqlite_ev09.png**              | Inspección física del archivo `device_systems.db` y tabla `users`.                     |       [Ver](evidencias/19_base_datos_sqlite_ev09.png)        |
+| **20_swagger_sqlalchemy.png**                  | Swagger UI conectado a base de datos relacional.                                       |         [Ver](evidencias/20_swagger_sqlalchemy.png)          |
+| **21_redoc_ev09.png**                          | Documentación ReDoc de la versión con persistencia.                                    |             [Ver](evidencias/21_redoc_ev09.png)              |
+| **22_post_usuario_sqlalchemy.png**             | Inserción en base de datos SQLite con ID autoincremental (201 Created).                |       [Ver](evidencias/22_post_usuario_sqlalchemy.png)       |
+| **23_get_lista_sqlalchemy.png**                | Consulta `SELECT` de todos los usuarios en base de datos.                              |        [Ver](evidencias/23_get_lista_sqlalchemy.png)         |
+| **24_get_usuario_id_sqlalchemy.png**           | Consulta por ID primario con SQLAlchemy.                                               |      [Ver](evidencias/24_get_usuario_id_sqlalchemy.png)      |
+| **25_filtro_rol_sqlalchemy.png**               | Filtrado en base de datos por columna `role` (`admin`, `support`, `user`).             |        [Ver](evidencias/25_filtro_rol_sqlalchemy.png)        |
+| **26_filtro_estado_sqlalchemy.png**            | Filtrado en base de datos por columna booleana `is_active`.                            |      [Ver](evidencias/26_filtro_estado_sqlalchemy.png)       |
+| **27_ordenamiento_sqlalchemy.png**             | Ordenamiento SQL por `created_at` o `name` (`asc`/`desc`).                             |       [Ver](evidencias/27_ordenamiento_sqlalchemy.png)       |
+| **28_put_sqlalchemy.png**                      | Actualización persistida mediante sesión de SQLAlchemy.                                |           [Ver](evidencias/28_put_sqlalchemy.png)            |
+| **29_patch_sqlalchemy.png**                    | Modificación parcial reflejada en disco.                                               |          [Ver](evidencias/29_patch_sqlalchemy.png)           |
+| **30_delete_sqlalchemy.png**                   | Borrado físico `DELETE FROM users WHERE id = :id`.                                     |          [Ver](evidencias/30_delete_sqlalchemy.png)          |
+| **31_usuario_eliminado_404.png**               | Verificación de eliminación comprobando que retorna `404 Not Found`.                   |        [Ver](evidencias/31_usuario_eliminado_404.png)        |
+| **32_error_email_duplicado_sqlalchemy.png**    | Captura de `IntegrityError` de SQLite ante correo duplicado (`400 Bad Request`).       |  [Ver](evidencias/32_error_email_duplicado_sqlalchemy.png)   |
+| **33_error_validacion_sqlalchemy.png**         | Validación de correo y campos con Pydantic v2.                                         |     [Ver](evidencias/33_error_validacion_sqlalchemy.png)     |
+| **34_error_patch_vacio_sqlalchemy.png**        | Control de excepciones para payloads vacíos.                                           |    [Ver](evidencias/34_error_patch_vacio_sqlalchemy.png)     |
+| **35_error_put_inexistente_sqlalchemy.png**    | Manejo de excepción cuando el registro no existe en SQLite.                            |  [Ver](evidencias/35_error_put_inexistente_sqlalchemy.png)   |
+| **36_error_delete_inexistente_sqlalchemy.png** | Manejo de eliminación fallida sobre registro inexistente.                              | [Ver](evidencias/36_error_delete_inexistente_sqlalchemy.png) |
+| **37_persistencia_entre_sesiones.png**         | Prueba de persistencia cerrando y reabriendo el servidor Uvicorn sin pérdida de datos. |     [Ver](evidencias/37_persistencia_entre_sesiones.png)     |
+| **38_gitflow_ev09.png**                        | Evidencia del flujo de ramas en Git para la entrega EV09.                              |            [Ver](evidencias/38_gitflow_ev09.png)             |
 
 </details>
 
@@ -458,18 +458,110 @@ En esta segunda etapa se reemplazó el almacenamiento en memoria por persistenci
 
 Fase culminante donde se incorporan migraciones de esquema versionadas con Alembic, modelos de dispositivos y préstamos, integridad referencial y consultas relacionales complejas con joins y filtros.
 
-| Evidencia | Requisito de la Guía | Captura |
-| :--- | :--- | :---: |
-| **ev10_01_alembic_init.png** | Ejecución de `alembic init` y estructura creada. | [Ver](evidencias/ev10_01_alembic_init.png) |
-| **ev10_02_alembic_revision.png** | Creación de migración con `alembic revision --autogenerate`. | [Ver](evidencias/ev10_02_alembic_revision.png) |
-| **ev10_03_alembic_upgrade_history.png** | Aplicación con `alembic upgrade head` e historial `alembic history`. | [Ver](evidencias/ev10_03_alembic_upgrade_history.png) |
-| **ev10_04_estructura_tablas.png** | Estructura SQL de tablas en SQLite (`users`, `devices`, `loans`). | [Ver](evidencias/ev10_04_estructura_tablas.png) |
-| **ev10_05_swagger_general.png** | Swagger UI con tags `Users`, `Devices` y `Loans`, incluyendo `/loans/details`. | [Ver](evidencias/ev10_05_swagger_general.png) |
-| **ev10_06_post_creaciones.png** | Creación exitosa (201 Created) de usuario, dispositivo y préstamo. | [Ver](evidencias/ev10_06_post_creaciones.png) |
-| **ev10_07_error_dispositivo_no_disponible.png** | Validación de regla de negocio de disponibilidad (409 Conflict). | [Ver](evidencias/ev10_07_error_dispositivo_no_disponible.png) |
-| **ev10_08_loans_details_joins.png** | Consultas con Joins entre préstamos, usuarios y dispositivos (`GET /loans/details`). | [Ver](evidencias/ev10_08_loans_details_joins.png) |
-| **ev10_09_filtros_avanzados.png** | Filtrado por estado, tipo de equipo y disponibilidad. | [Ver](evidencias/ev10_09_filtros_avanzados.png) |
-| **ev10_10_devolucion_dispositivo.png** | Devolución de equipo (`PATCH return`) y confirmación de `is_available: true`. | [Ver](evidencias/ev10_10_devolucion_dispositivo.png) |
+| Evidencia                                       | Requisito de la Guía                                                                 |                            Captura                            |
+| :---------------------------------------------- | :----------------------------------------------------------------------------------- | :-----------------------------------------------------------: |
+| **ev10_01_alembic_init.png**                    | Ejecución de `alembic init` y estructura creada.                                     |          [Ver](evidencias/ev10_01_alembic_init.png)           |
+| **ev10_02_alembic_revision.png**                | Creación de migración con `alembic revision --autogenerate`.                         |        [Ver](evidencias/ev10_02_alembic_revision.png)         |
+| **ev10_03_alembic_upgrade_history.png**         | Aplicación con `alembic upgrade head` e historial `alembic history`.                 |     [Ver](evidencias/ev10_03_alembic_upgrade_history.png)     |
+| **ev10_04_estructura_tablas.png**               | Estructura SQL de tablas en SQLite (`users`, `devices`, `loans`).                    |        [Ver](evidencias/ev10_04_estructura_tablas.png)        |
+| **ev10_05_swagger_general.png**                 | Swagger UI con tags `Users`, `Devices` y `Loans`, incluyendo `/loans/details`.       |         [Ver](evidencias/ev10_05_swagger_general.png)         |
+| **ev10_06_post_creaciones.png**                 | Creación exitosa (201 Created) de usuario, dispositivo y préstamo.                   |         [Ver](evidencias/ev10_06_post_creaciones.png)         |
+| **ev10_07_error_dispositivo_no_disponible.png** | Validación de regla de negocio de disponibilidad (409 Conflict).                     | [Ver](evidencias/ev10_07_error_dispositivo_no_disponible.png) |
+| **ev10_08_loans_details_joins.png**             | Consultas con Joins entre préstamos, usuarios y dispositivos (`GET /loans/details`). |       [Ver](evidencias/ev10_08_loans_details_joins.png)       |
+| **ev10_09_filtros_avanzados.png**               | Filtrado por estado, tipo de equipo y disponibilidad.                                |        [Ver](evidencias/ev10_09_filtros_avanzados.png)        |
+| **ev10_10_devolucion_dispositivo.png**          | Devolución de equipo (`PATCH return`) y confirmación de `is_available: true`.        |     [Ver](evidencias/ev10_10_devolucion_dispositivo.png)      |
 
 </details>
 
+---
+
+## 🔐 EV11 — Seguridad: Autenticación, Middleware, CORS, Rate Limiting y Validación Avanzada
+
+**Actividad:** GA1-220501096-01-AA1-EV11 · **Rama:** `device_systems_security`
+
+Esta fase evoluciona `device_systems` (construido en EV09/EV10) agregando una capa completa
+de seguridad sin romper la funcionalidad previa de usuarios, dispositivos y préstamos.
+
+### Qué se agregó
+
+| Área                         | Detalle                                                                                                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Autenticación**            | OAuth2 Password Flow + JWT (`python-jose`). Endpoints `POST /auth/register`, `POST /auth/login`, `GET /auth/me`.                                                                                              |
+| **Hash de contraseñas**      | `passlib[bcrypt]`. Ninguna contraseña se guarda ni se retorna en texto plano (`hashed_password` nunca aparece en las respuestas).                                                                             |
+| **Validaciones**             | Pydantic v2 (`field_validator`, `Field`, `ConfigDict(from_attributes=True)`). Contraseña: mínimo 8 caracteres, mayúscula, minúscula, número, sin espacios.                                                    |
+| **Autorización por rol**     | Dependencias `get_current_active_user`, `require_admin`, `require_admin_or_support` en `app/dependencies/auth_dependency.py`.                                                                                 |
+| **Middleware personalizado** | `app/middlewares/request_middleware.py`: agrega `X-App-Name`, `X-Process-Time`, `X-Request-ID` y registra cada petición en el log.                                                                            |
+| **CORS**                     | `CORSMiddleware` configurado para `http://localhost:5173` y `http://localhost:3000` con credenciales.                                                                                                         |
+| **Rate limiting**            | `slowapi`: `/auth/login` 5/min, `/auth/register` 3/min, `GET /users` 30/min, `POST /loans` 10/min. Responde `429 Too Many Requests` al exceder el límite.                                                     |
+| **Migración**                | `alembic/versions/..._add_authentication_fields_to_users.py`: agrega `hashed_password` sin romper filas existentes (server_default temporal, retirado tras el backfill) y corrige el índice único de `email`. |
+
+### Matriz de protección de rutas implementada
+
+| Ruta                                                        | Protección                                                                                                                                                              |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /users`, `GET /users/{id}`                             | Usuario autenticado                                                                                                                                                     |
+| `POST/PUT/PATCH/DELETE /users/*`                            | Rol **admin** (decisión de diseño: el alta pública solo ocurre vía `/auth/register` y siempre crea rol `user`; gestionar cuentas administrativas se restringe a admins) |
+| `POST /devices`, `PUT /devices/{id}`, `PATCH /devices/{id}` | Rol **admin o support**                                                                                                                                                 |
+| `DELETE /devices/{id}`                                      | Rol **admin**                                                                                                                                                           |
+| `POST /loans`                                               | Usuario autenticado                                                                                                                                                     |
+| `PATCH /loans/{id}/return`                                  | Rol **admin o support**                                                                                                                                                 |
+| `GET /loans/details`                                        | Rol **admin o support**                                                                                                                                                 |
+
+Sin token válido → `401 Unauthorized`. Con token válido pero rol insuficiente → `403 Forbidden`.
+
+### ¿Por qué no usar `allow_origins=["*"]` en producción?
+
+La especificación CORS prohíbe combinar un origen comodín (`*`) con `allow_credentials=True`: si se
+permitiera, cualquier sitio web (incluido uno malicioso) podría hacer peticiones autenticadas a la API
+usando las cookies o el header `Authorization` de la víctima con solo lograr que abriera una página en
+su navegador, ya que el navegador adjuntaría las credenciales automáticamente. Por eso en producción se
+debe declarar explícitamente la lista de dominios del frontend autorizado (por ejemplo
+`https://app.miempresa.com`), nunca `"*"`, cuando `allow_credentials=True`.
+
+### Variables de entorno nuevas (`.env`)
+
+```
+SECRET_KEY=<valor aleatorio largo, ej. python -c "import secrets; print(secrets.token_hex(32))">
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### Usuarios semilla (creados automáticamente al iniciar la API)
+
+| Email                      | Password    | Rol     | Activo |
+| -------------------------- | ----------- | ------- | ------ |
+| admin@device-systems.com   | Admin1234   | admin   | sí     |
+| support@device-systems.com | Support1234 | support | sí     |
+| user@device-systems.com    | User12345   | user    | no     |
+
+### Cómo probar
+
+```bash
+pip install -r requirements.txt
+alembic upgrade head
+uvicorn app.main:app --reload
+```
+
+Swagger UI en `http://127.0.0.1:8000/docs`: usa el botón **Authorize**, inicia sesión con
+`POST /auth/login` (username = email) y prueba las rutas protegidas directamente desde ahí.
+
+La suite `tests/test_device_systems_api.py` cubre los 15 escenarios funcionales mínimos de la
+Fase 13 de la guía (registro, login, `/auth/me`, accesos sin token / con token inválido / sin
+permisos, roles, CORS, cabeceras de middleware y activación del rate limiting):
+
+```bash
+pytest tests/ -v
+```
+
+### Evidencias reales EV11 (capturas del proyecto)
+
+| Evidencia              | Descripción                                                                                 | Archivo                                                                            |
+| ---------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Inicio del API         | Página raíz con bienvenida, enlaces a Swagger y ReDoc, y resumen de seguridad.              | [evidencias/ev11_01_root_home.png](evidencias/ev11_01_root_home.png)               |
+| Swagger OAuth2         | Swagger UI con el esquema OAuth2PasswordBearer visible y documentación de la API.           | [evidencias/ev11_02_swagger_oauth2.png](evidencias/ev11_02_swagger_oauth2.png)     |
+| Flujo de autenticación | Registro, login y consulta a `/auth/me` con token generado.                                 | [evidencias/ev11_03_auth_flow.png](evidencias/ev11_03_auth_flow.png)               |
+| Protección de rutas    | Acceso sin token (`401`), token inválido (`401`) y rol insuficiente (`403`).                | [evidencias/ev11_04_protected_routes.png](evidencias/ev11_04_protected_routes.png) |
+| CORS y middleware      | Cabeceras `X-App-Name`, `X-Process-Time`, `X-Request-ID` y CORS de `http://localhost:5173`. | [evidencias/ev11_05_cors_middleware.png](evidencias/ev11_05_cors_middleware.png)   |
+| Rate limiting          | Validación real de bloqueo por exceso de peticiones con `429 Too Many Requests`.            | [evidencias/ev11_06_rate_limit_429.png](evidencias/ev11_06_rate_limit_429.png)     |
+
+> Todas estas capturas se generaron directamente contra la API en ejecución y corresponden a respuestas reales del proyecto `device_systems`.

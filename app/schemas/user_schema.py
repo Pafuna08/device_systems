@@ -6,6 +6,9 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional, Literal
 
+from app.schemas.auth_schema import _validate_strong_password
+from pydantic import field_validator
+
 
 class UserBase(BaseModel):
     """Modelo base con campos comunes"""
@@ -30,13 +33,33 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    """Modelo para crear un nuevo usuario"""
-    pass
+    """Modelo para crear un nuevo usuario (uso administrativo vía /users)."""
+    password: str = Field(
+        ...,
+        min_length=8,
+        max_length=72,
+        description="Minimo 8 caracteres, con mayuscula, minuscula, numero y sin espacios",
+    )
+
+    @field_validator("password")
+    @classmethod
+    def password_must_be_strong(cls, value: str) -> str:
+        return _validate_strong_password(value)
 
 
 class UserUpdate(UserBase):
     """Modelo para reemplazar completamente un usuario."""
-    pass
+    password: str = Field(
+        ...,
+        min_length=8,
+        max_length=72,
+        description="Minimo 8 caracteres, con mayuscula, minuscula, numero y sin espacios",
+    )
+
+    @field_validator("password")
+    @classmethod
+    def password_must_be_strong(cls, value: str) -> str:
+        return _validate_strong_password(value)
 
 
 UserReplace = UserUpdate
@@ -48,6 +71,14 @@ class UserPatch(BaseModel):
     email: Optional[EmailStr] = None
     role: Optional[Literal["admin", "support", "user"]] = None
     is_active: Optional[bool] = None
+    password: Optional[str] = Field(None, min_length=8, max_length=72)
+
+    @field_validator("password")
+    @classmethod
+    def password_must_be_strong(cls, value: Optional[str]) -> Optional[str]:
+        if value is None:
+            return value
+        return _validate_strong_password(value)
 
 
 class UserResponse(UserBase):
