@@ -271,14 +271,68 @@ Las evidencias reales del proyecto quedaron organizadas por fase dentro de la ca
 
 En la fase final, la evidencia verificada de seguridad está en [evidencias/ev11/EV11_RESULTADOS.md](evidencias/ev11/EV11_RESULTADOS.md) y en las capturas reales del sistema:
 
-- [evidencias/ev11/ev11_01_root_home.png](evidencias/ev11/ev11_01_root_home.png)
-- [evidencias/ev11/ev11_02_swagger_oauth2.png](evidencias/ev11/ev11_02_swagger_oauth2.png)
-- [evidencias/ev11/ev11_03_auth_flow.png](evidencias/ev11/ev11_03_auth_flow.png)
-- [evidencias/ev11/ev11_04_protected_routes.png](evidencias/ev11/ev11_04_protected_routes.png)
-- [evidencias/ev11/ev11_05_cors_middleware.png](evidencias/ev11/ev11_05_cors_middleware.png)
-- [evidencias/ev11/ev11_06_rate_limit_429.png](evidencias/ev11/ev11_06_rate_limit_429.png)
+### 1. Estructura del proyecto
 
-> Estas capturas fueron tomadas del proyecto en ejecución y no son inventadas. La documentación y los nombres de archivos corresponden a la evidencia generada por la API real.
+![Estructura del proyecto](evidencias/ev11/ev11_00_estructura_proyecto.png)
+
+### 2. Migración Alembic aplicada
+
+![Migración Alembic aplicada](evidencias/ev11/ev11_07_migracion_alembic_aplicada.png)
+
+### 3. Registro de usuario
+
+![Registro de usuario](evidencias/ev11/ev11_08_registro_usuario.png)
+
+### 4. Login y token generado
+
+![Login y token JWT](evidencias/ev11/ev11_09_login_token_JWT.png)
+
+### 5. Consulta a /auth/me
+
+![Perfil autenticado /auth/me](evidencias/ev11/ev11_03_auth_flow.png)
+
+### 6. Acceso sin token
+
+![Acceso sin token](evidencias/ev11/ev11_10_acceso_sin_token.png)
+
+### 7. Acceso con rol no permitido
+
+![Acceso con rol no permitido](evidencias/ev11/ev11_04_protected_routes.png)
+
+### 8. Swagger/OpenAPI con OAuth2
+
+![Swagger/OpenAPI con OAuth2](evidencias/ev11/ev11_02_swagger_oauth2.png)
+
+### 9. Cabeceras del middleware
+
+![Cabeceras del middleware](evidencias/ev11/ev11_05_cabecera_middleware.png)
+
+### 10. Prueba de rate limiting
+
+![Rate limiting activado](evidencias/ev11/ev11_06_rate_limit_429.png)
+
+### 11. Página principal de la API
+
+![Página raíz de la API](evidencias/ev11/ev11_01_root_home.png)
+
+> Estas capturas fueron tomadas del proyecto en ejecución y corresponden a la evidencia real generada por la API.
+
+---
+
+## Explicación de CORS configurado
+
+Se configuró `CORSMiddleware` en la aplicación para permitir explícitamente únicamente los orígenes locales autorizados:
+
+- `http://localhost:5173`
+- `http://localhost:3000`
+
+La configuración incluye:
+
+- `allow_credentials=True`
+- `allow_methods=["*"]`
+- `allow_headers=["*"]`
+
+Esto permite que clientes frontend locales puedan consumir la API de forma segura sin abrir el acceso completo a cualquier dominio. No se recomienda usar `allow_origins=["*"]` en producción cuando hay credenciales, porque la especificación CORS no permite combinar origen comodín con autenticación de navegador. Si se hiciera eso, cualquier sitio externo podría intentar hacer peticiones autenticadas usando tokens o cookies del usuario, lo que supondría un riesgo serio de seguridad.
 
 ---
 
@@ -301,6 +355,14 @@ Resultado real obtenido:
 ```
 
 Esto confirma que la API cumple con la funcionalidad principal de la guía final y que el proyecto está estable para entrega.
+
+---
+
+## Reflexión final sobre la importancia de la seguridad en APIs REST
+
+La seguridad en una API REST no es un detalle opcional: es una parte fundamental del diseño del sistema. Al exponer endpoints que gestionan usuarios, dispositivos, préstamos y datos sensibles, es imprescindible proteger la aplicación con autenticación, validación de entradas, control de roles, límites de peticiones y trazabilidad de accesos.
+
+En este proyecto, el uso de JWT con OAuth2, contraseñas con hash, rutas protegidas, middleware personalizado y rate limiting reduce el riesgo de accesos no autorizados, abuso del servicio, inyección de lógica por parte de clientes no confiables y errores de seguridad que podrían comprometer la integridad del sistema. En un entorno real, una API insegura puede poner en riesgo tanto la información como la continuidad del negocio. Por eso la seguridad debe integrarse desde el inicio del desarrollo y no agregarse como un arreglo final.
 
 ---
 
